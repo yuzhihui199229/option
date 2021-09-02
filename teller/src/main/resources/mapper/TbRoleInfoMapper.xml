@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayun.option.mapper.TbRoleInfoMapper">
+
+    <!--  根据用户查询到相关的角色  -->
+    <select id="getRoleList" resultType="com.huayun.option.entity.TbRoleInfo">
+        SELECT
+        a.id,
+        a.role_id
+        FROM
+        tb_role_info a,
+        tb_tell_info b,
+        tb_tell_role c
+        WHERE
+        b.id = c.tid
+        AND a.id = c.rid
+        AND b.id =#{id}
+    </select>
+</mapper>

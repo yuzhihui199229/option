@@ -1,0 +1,11 @@
+server:
+  port: 9607
+netty:
+  ip: 192.168.2.105
+  port: 5556
+zmq:
+  ip: 192.168.1.82
+  port: 5555
+spring:
+  application:
+    name: option-client

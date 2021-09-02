@@ -1,0 +1,75 @@
+syntax = "proto3";
+option optimize_for = SPEED;//加快解析
+option java_outer_classname = "ClientMgr";
+
+//login
+message ReqLogin
+{
+    string user_id = 1;
+    uint32 client_type = 2;
+    bytes  password = 3;    
+};
+message RspLogin
+{
+    string token = 1;
+    uint32 heart_beat = 2;
+    uint32 id = 3;
+    uint32 last_seq = 4;
+};
+
+//heart_beat
+message ReqHeartBeat
+{
+    string token = 1;
+};
+message RspHeartBeat
+{    
+};
+
+//logout
+message ReqLogout 
+{
+    string token = 1;
+};
+message RspLogout
+{    
+};
+
+//MSG_QUERY_USER_INFO,查询用户信息
+message ReqUserInfo 
+{
+    string user_id = 1;
+    //string user_name = 2;
+    //string user_account = 3;
+};
+
+message RspUserInfo
+{
+    string user_id = 1;
+	string user_name = 2;
+	string company_id = 3;
+	string user_account = 4;
+	string phone = 5;
+	int32 user_propty = 6;
+	int32 user_status = 7;
+	int32 fee_group = 8;
+	int64 create_time = 9;
+	int64 update_time = 10;
+};
+
+//MSG_QUERY_ORDER,查询订单
+message ReqQueryOrder
+{
+	string user_name=1;
+	int32 account=2;
+	int32 order_id=3;
+};
+
+message RspQueryOrder
+{
+	int32 ret_code=1;
+	int32 order_type=2;
+	int32 product_id=3;
+	int32 amount=4;
+};
+
