@@ -16,16 +16,4 @@ public class ClientApplication{
     public static void main(String[] args) {
         SpringApplication.run(ClientApplication.class,args);
     }
-
-//    @Value("${zmq.ip}")
-//    private String ip;
-//
-//    @Value("${zmq.port}")
-//    private int port;
-//
-//
-//    @Override
-//    public void run(String... args) throws Exception {
-//        ZmqClient.createConnect(ip, port);
-//    }
 }

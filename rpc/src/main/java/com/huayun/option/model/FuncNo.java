@@ -2,7 +2,7 @@ package com.huayun.option.model;
 
 public enum FuncNo {
     /**
-     * 没有使用funcNo
+     * 没有使用FuncNo
      */
     FUNC_NO_NULL(null),
     CMD_NEW_ORDER((short)511);       //期权集中竞价交易业务新订单
