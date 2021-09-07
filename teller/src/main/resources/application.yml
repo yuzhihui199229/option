@@ -8,6 +8,7 @@ spring:
     url: jdbc:mysql://192.168.1.82:3306/option?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     username: root
     password: Root_123
+#mybat-plus的日志配置
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

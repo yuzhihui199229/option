@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.nio.charset.Charset;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -27,8 +29,8 @@ class UserControllerTest {
     @DisplayName("查询用户信息")
     void getUserInfoList() throws Exception {
         //封装请求的数据
-        ReqUserInfo reqUserInfo=new ReqUserInfo();
-            reqUserInfo.setUserId("my_id");
+        ReqUserInfo reqUserInfo = new ReqUserInfo();
+        reqUserInfo.setUserId("my_id");
         MvcResult mvcResult = mockMvc.perform(
                 //请求的方法
                 post("/user/getUserInfoList")
@@ -38,5 +40,7 @@ class UserControllerTest {
                         .content(JsonUtil.objectToJson(reqUserInfo)))
                 //获取返回值
                 .andReturn();
+        //将返回值转化为对象打印出来
+        log.info(mvcResult.getResponse().getContentAsString(Charset.defaultCharset()));
     }
 }

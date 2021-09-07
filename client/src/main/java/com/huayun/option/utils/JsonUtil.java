@@ -6,15 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
-/**
- * @ProjectName: nationalpolicy
- * @Package: com.bie.utils
- * @ClassName: JsonUtils
- * @Author: biehl
- * @Description: ${description}
- * @Date: 2020/2/28 10:30
- * @Version: 1.0
- */
 public class JsonUtil {
 
     // 定义jackson对象

@@ -26,6 +26,7 @@
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <rpc.version>1.0.0-SNAPSHOT</rpc.version>
+        <java-jwt.version>3.13.0</java-jwt.version>
     </properties>
 
     <packaging>pom</packaging>
@@ -81,6 +82,12 @@
                 <artifactId>rpc</artifactId>
                 <version>${rpc.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
