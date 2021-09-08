@@ -49,14 +49,14 @@ public class TbTellInfoController {
         //查询该用户是否存在
         TbTellInfo tellInfoRsp = tellInfoService.getOne(wrapper);
         if (tellInfoRsp != null) {
-            //查询用户的角色
-            List<TbRoleInfo> roleList = roleInfoService.getRoleList(tellInfoRsp);
-            //生成角色的字符串组
-            StringBuilder sb = new StringBuilder();
-            for (TbRoleInfo tbRoleInfo : roleList) {
-                sb.append(tbRoleInfo.getRoleId());
-            }
-            String roleStr = sb.toString();
+//            //查询用户的角色
+//            List<TbRoleInfo> roleList = roleInfoService.getRoleList(tellInfoRsp);
+//            //生成角色的字符串组
+//            StringBuilder sb = new StringBuilder();
+//            for (TbRoleInfo tbRoleInfo : roleList) {
+//                sb.append(tbRoleInfo.getRoleId());
+//            }
+//            String roleStr = sb.toString();
             //生成token
             String token = JwtUtil.sign(tellInfoRsp.getUserName());
             //创建保存信息的map

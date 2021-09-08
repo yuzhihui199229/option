@@ -112,7 +112,7 @@ public class TbOptionInfo implements Serializable {
     private Integer upperLimitPrice;
 
     @ApiModelProperty(value = "跌价限制值")
-    private Integer lowLimitPrice;
+    private Integer lowerLimitPrice;
 
     @ApiModelProperty(value = "昨卖开每张保证金;x10000")
     private Long lastSellMargin;

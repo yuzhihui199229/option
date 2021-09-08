@@ -87,7 +87,6 @@
                 <artifactId>java-jwt</artifactId>
                 <version>${java-jwt.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
