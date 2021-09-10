@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,19 +37,19 @@ class TbTellInfoControllerTest {
     @DisplayName("测试登录的方法")
     void login() throws Exception {
         //封装输入的参数
-        TbTellInfo tellInfo = new TbTellInfo();
-        tellInfo.setUserName("admin")
-                .setPassword("123456");
+        Map<String, Object> map = new HashMap<>();
         //调用MockMVC实现http通信
         MvcResult mvcResult = mockMvc.perform(
                 //请求的方法
-                post("/tellInfo/login")
+                get("/option/tellInfo/login")
+                        .param("userName", "admin")
+                        .param("password", "123456"))
                         //输入的数据类型
-                        .contentType(MediaType.APPLICATION_JSON)
-                        //输入的数据
-                        .content(JsonUtil.objectToJson(tellInfo)))
-                //获取返回值
-                .andReturn();
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        //输入的数据
+//                        .content(JsonUtil.objectToJson(map)))
+                        //获取返回值
+                        .andReturn();
         String responseStr = mvcResult.getResponse().getContentAsString(Charset.defaultCharset());
         Result result = JsonUtil.jsonToPojo(responseStr, Result.class);
         Map<String, Object> resultMap = (Map<String, Object>) result.getData();
@@ -84,7 +85,7 @@ class TbTellInfoControllerTest {
         fos.close();
     }
 
-    public static String readTokenFromTxt() {
+    static String readTokenFromTxt() {
         String path = System.getProperty("user.dir") + "\\src\\test\\java\\com\\huayun\\option\\controller\\";
         File file = new File(path, "token.txt");
         InputStream in = null;
@@ -96,9 +97,7 @@ class TbTellInfoControllerTest {
             int byteread = 0;
             try {
                 in = new FileInputStream(file);
-                // 读入多个字节到字节数组中，byteread为一次读入的字节数
                 while ((byteread = in.read(tempbytes)) != -1) {
-                    //  System.out.write(tempbytes, 0, byteread);
                     String str = new String(tempbytes, 0, byteread);
                     sb.append(str);
                 }
@@ -118,7 +117,7 @@ class TbTellInfoControllerTest {
         //调用MockMVC实现http通信
         MvcResult mvcResult = mockMvc.perform(
                 //请求的方法
-                get("/tellInfo/selectList")
+                get("/option/tellInfo/selectList")
                         .header("token", token))
                 //获取返回值
                 .andReturn();

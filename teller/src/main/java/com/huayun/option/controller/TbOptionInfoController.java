@@ -26,7 +26,7 @@ import java.util.List;
  * @since 2021-08-31
  */
 @RestController
-@RequestMapping("/optionInfo")
+@RequestMapping("/option/optionInfo")
 @Api(tags = "期权信息")
 @CrossOrigin
 public class TbOptionInfoController {

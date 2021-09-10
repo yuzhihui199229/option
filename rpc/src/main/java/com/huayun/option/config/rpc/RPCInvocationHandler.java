@@ -1,6 +1,7 @@
 package com.huayun.option.config.rpc;
 
 import com.huayun.option.annotation.RpcProxy;
+import com.huayun.option.codec.HeadCodec;
 import com.huayun.option.codec.ProtocolCodec;
 import com.huayun.option.model.FuncNo;
 import com.huayun.option.model.ParseType;
@@ -48,17 +49,19 @@ public class RPCInvocationHandler implements InvocationHandler {
         } else {
             //获取的到参数
             ProtocolCodec protocolCodec=(ProtocolCodec)args[0];
-            //获取到注解中的功能号
-            FuncNo funcNo = type.getAnnotation(RpcProxy.class).funcNo();
-            Short funcNoCode = funcNo.getCode();
+            HeadCodec headCodec = protocolCodec.getHeadCodec();
+            int sessionId = headCodec.getSessionId();
+//            //获取到注解中的功能号
+//            FuncNo funcNo = type.getAnnotation(RpcProxy.class).funcNo();
+//            Short funcNoCode = funcNo.getCode();
             //获取到该接口所对应的channel对象
             Channel channel = ChannelPool.getChannel(className + "-" + parseType.name());
             //netty向服务端发送消息
             NettyClient.send(protocolCodec,channel);
             //将服务的channel保存到channel中
-            NettyRequestPool.getInstance().addRequest(funcNoCode, channel.eventLoop());
+            NettyRequestPool.getInstance().addRequest(sessionId, channel.eventLoop());
             //获取到应答
-            ProtocolCodec response = NettyRequestPool.getInstance().getResponse(funcNoCode);
+            ProtocolCodec response = NettyRequestPool.getInstance().getResponse(sessionId);
             return response;
         }
     }

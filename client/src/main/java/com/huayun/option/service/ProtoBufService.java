@@ -8,11 +8,12 @@ import com.huayun.option.protobuf.Protocol;
  * 用户
  */
 @RpcProxy(parseType = ParseType.PROTOBUF)
-public interface UserService {
+public interface ProtoBufService {
     /**
-     * 查询用户信息
+     * protobuf转化
      * @param bytes
      * @return
      */
-    Protocol userInfo(byte[] bytes);
+    Protocol protoBufTurn(byte[] bytes);
+
 }

@@ -26,10 +26,10 @@ public class TbTradeTime implements Serializable {
     @ApiModelProperty(value = "交易时间组号")
     private Integer tradeTimeGroup;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "开始时间")
     private Integer startTime;
 
-    @ApiModelProperty(value = "更新人")
+    @ApiModelProperty(value = "结束时间")
     private Integer stopTime;
 
     @ApiModelProperty(value = "交易时间类型;0连续竞价(Normal),  1开盘集合竞价(Open) , 2收盘集合竞价(Close) , 3盘中临时停牌复牌集合竞价(Temp)")

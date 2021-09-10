@@ -12,10 +12,15 @@ public class MagicNo {
     /**
      * codec请求头的长度
      */
-    public static final int headCodecLen = 12;
+    public static final int headCodecLen = 32;
 
     /**
      * 消息头魔数
      */
     public static final short magicNum = (short) 0xDADA;
+
+    /**
+     * 系统错误
+     */
+    public static final int SYSTEM_ERROR = 2001;
 }

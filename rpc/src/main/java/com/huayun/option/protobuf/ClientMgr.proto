@@ -1,20 +1,29 @@
 syntax = "proto3";
-option optimize_for = SPEED;//加快解析
-option java_outer_classname = "ClientMgr";
 
 //login
 message ReqLogin
 {
     string user_id = 1;
-    uint32 client_type = 2;
-    bytes  password = 3;    
+    string password = 2; 
+	bytes  ClientType = 3;  
 };
 message RspLogin
 {
     string token = 1;
-    uint32 heart_beat = 2;
-    uint32 id = 3;
-    uint32 last_seq = 4;
+    uint32 id = 2;
+    uint32 uuser_id = 3;
+};
+
+//two login
+message ReqLoginSecond
+{
+    string token = 1; 
+};
+message RspLoginSecond
+{
+    uint32 heart_beat = 1;
+    uint32 LastMaxMsgSeq = 2;
+
 };
 
 //heart_beat
@@ -47,14 +56,15 @@ message RspUserInfo
 {
     string user_id = 1;
 	string user_name = 2;
-	string company_id = 3;
-	string user_account = 4;
-	string phone = 5;
-	int32 user_propty = 6;
-	int32 user_status = 7;
-	int32 fee_group = 8;
-	int64 create_time = 9;
-	int64 update_time = 10;
+	string user_passwd = 3;
+	string company_id = 4;
+	string user_account = 5;
+	string phone = 6;
+	int32 user_propty = 7;
+	int32 user_status = 8;
+	int32 fee_group = 9;
+	int64 create_time = 10;
+	int64 update_time = 11;
 };
 
 //MSG_QUERY_ORDER,查询订单
@@ -65,11 +75,325 @@ message ReqQueryOrder
 	int32 order_id=3;
 };
 
-message RspQueryOrder
+message SelNewOrder
 {
-	int32 ret_code=1;
-	int32 order_type=2;
-	int32 product_id=3;
-	int32 amount=4;
+	uint32 id = 1; //
+	uint32 msg_type = 2; //消息类型
+	uint32 body_length = 3; //消息长度
+	string appl_id = 4; //应用标识
+	string submitting_pbuid = 5; //申报交易单元
+	string security_id = 6; //期权代码
+	string security_id_source = 7; //期权代码源;102=深圳证券交易所
+	int32 owner_type = 8; //订单所有者类型
+	string clearing_firm = 9; //结算机构代码
+	int64 transact_time = 10; //委托时间
+	string user_info = 11; //用户信息
+	string cl_ord_id = 12; //客户订单编号
+	string account_id = 13; //证券账户
+	string branch_id = 14; //营业部代码
+	string order_restrictions = 15; //订单限定
+	int32 side = 16; //买卖方向
+	int32 ord_type = 17; //订单类别;1 表示市价 2 表示限价 U 本方最优
+	int64 order_qty = 18; //订单数量
+	int64 price = 19; //价格
+	int64 stop_px = 20; //止损价(扩展)
+	int64 min_qty = 21; //最低成交数量
+	int32 max_price_levels = 22; //最多成交位数
+	int32 time_in_force = 23; //订单有效时间类型
+	int32 position_effect = 24; //平仓标识;O开仓 ,C平仓
+	int32 covered_or_uncovered = 25; //备兑标签;0表示备兑，1表示非备兑
+	string contract_account_code = 26; //合约账户标识码
+	uint32 check_sum = 27; //校验码
+	uint32 uaccount_id = 28; //股东账户ID
+	uint32 upos_id = 29; //期权持仓ID
+	uint32 uoption_id = 30; //期权ID
+	uint32 uuser_id = 31; //用户ID
+	uint32 upbu_id = 32; //申报交易单元ID
+	int32 order_status = 33; //订单状态;0:新订单 1部分成交 2完全成交 4已撤销 8已拒绝 5已确认新订单 3对敲 6超频 7发送失败
+	uint32 tx_id = 34; //订单事务ID
+	int64 orig_frozen_price = 35; //原始冻结价格;无涨跌幅限制的订单在下单时的冻结价格，与有涨跌幅限制的价格不同。这里记录了下单时的原始冻结价格
+	int64 origin_ord_qty = 36; //原始订单数量;已乘以100
+	double origin_fee = 37; //原始冻结手续费
+	double final_fee = 38; //最终扣除手续费
+	double cum_exec = 39; //累计成交金额
+	uint32 seq = 40; //客户端序列号
 };
 
+message RspQueryOrder
+{
+	repeated SelNewOrder infos=1; 
+};
+
+message SelCancelOrder
+{
+	uint32 id = 1; //
+	uint32 msg_type = 2; //报文类型
+	uint32 body_length = 3; //报文长度
+	string appl_id = 4; //应用标识
+	string submitting_pbuid = 5; //申报交易单元
+	string security_id = 6; //证券代码
+	string security_id_source = 7; //证券代码源
+	int32 owner_type = 8; //订单所有者类型
+	string clearing_firm = 9; //结算机构代码
+	int64 transact_time = 10; //委托时间
+	string user_info = 11; //用户私有信息
+	string cl_ord_id = 12; //客户订单编号
+	string orig_cl_ord_id = 13; //原始订单客户编号
+	int32 side = 14; //原始订单买卖方向
+	string order_id = 15; //原订单TGW订单编号
+	int64 order_qty = 16; //原始订单数量
+	uint32 check_sum = 17; //校验和
+	int32 order_status = 18; //订单状态;0:新订单 1部分成交 2完全成交 4已撤销 8已拒绝 5已确认新订单 3对敲 6超频 7发送失败
+	uint32 uuser_id = 19; //用户ID
+	uint32 uaccount_id = 20; //股东账户ID
+	uint32 uoption_id = 21; //期权ID
+	uint32 upos_id = 22; //持仓ID
+	uint32 upbu_id = 23; //交易单元整形ID
+	uint32 uorig_ord_id = 24; //原订单编号整形ID
+	uint32 tx_id = 25; //事务ID
+	uint32 seq = 26; //客户端sequence
+};
+
+message RspSelCancelOrder
+{
+	repeated SelCancelOrder infos=1; 
+};
+
+//MSG_QUERY_PRODUCT_CONFIG,查询产品配置
+message ReqQueryProductConfig
+{
+	string security_id=1;//证券代码
+};
+
+message ProductInfo
+{
+    uint32 id=1; //
+    string security_id=2; //证券代码
+    string security_id_source=3; //证券代码源
+    string security_name=4; //证券代码
+    double prev_close_px=5; //前收盘价
+    int32 security_status=6; //证券状态;0正常，1停盘，2退市
+    int32 buy_qty_upper_limit=7; //限价买入上限
+    int32 sell_qty_upper_limit=8; //限价卖出上限
+    int32 market_buy_qty_upper_limit=9; //市价买入上限
+    int32 market_sell_qty_upper_limit=10; //市价卖出上限
+    int32 has_price_limit=11; //存在价格现在
+    int32 limit_type=12; //价格限制类型
+    double limit_up_rate=13; //价格上涨比例限制
+    double limit_down_rate=14; //价格下跌比例限制
+    double limit_upper_absolute=15; //价格上涨绝对值
+    double limit_down_absolute=16; //价格下跌绝对值
+    double upper_limit_price=17; //价格上涨限制值
+    double lower_limit_price=18; //价格下跌限制值
+    int32 fee_rate=19; //手续费
+    int32 trade_time_group=20; //交易时间组
+    int32 cum_buy_upper=21; //ST当用户日买入上限;，已乘以100
+    int32 property=22; //股票板块属性
+    int64 update_time=23; //更新时间
+};
+
+
+message RspQueryProductConfig
+{
+	//int32 ret_code=1;
+	repeated ProductInfo infos=1;
+};
+
+// 通用查询接口入参
+message ReqSelInterface
+{
+    string token = 1;
+};
+
+// 资金查询接口
+message SelAssetInfo
+{
+	uint32 id = 1; //
+	string asset_account = 2; //保证金账户
+	uint32 uuser_id = 3; //用户ID
+	double balance = 4; //日间余额
+	double frozen = 5; //冻结资金
+	double margin_amount = 6; //实时保证金
+	int64 create_time = 7; //注册时间
+	int64 update_time = 8; //更新时间
+	uint32 vers = 9; //资金版本号
+}; 
+
+message RspSelAssetInfo
+{
+    repeated SelAssetInfo infos=1;
+};
+
+// 资金流水查询接口
+message SelAssetLog
+{
+	uint64 tx_id = 1; //事务ID
+	uint32 uoption_id = 2; //期权ID
+	uint32 uaccount_id = 3; //股东账户ID
+	uint32 uuser_id = 4; //用户ID
+	uint32 upos_id = 5; //持仓ID
+	uint32 ustrategy_pos_id = 6; //组合策略持仓ID
+	string exec_id = 7; //执行编号
+	double from_balance = 8; //成交余额
+	double from_frozen = 9; //成交冻结
+	double to_balance = 10; //成交余额
+	double to_frozen = 11; //成交冻结
+	int32 trade_type = 12; //资金交易类型;0:buy, 1:sell, 2:in, 3:out, 4:frozen, 5:unfrozen
+	int64 create_time = 13; //创建时间
+}; 
+
+message RspSelAssetLog
+{
+    repeated SelAssetLog infos=1;
+};
+
+// 期权持仓查询
+message SelOption
+{
+	uint32 id = 1; //
+	uint32 uuser_id = 2; //用户ID
+	uint32 uoption_id = 3; //期权ID
+	uint32 uaccount_id = 4; //股东账户ID
+	int64 rights_qty = 5; //权利仓
+	int64 oblig_qty = 6; //义务仓
+	int64 cover_qty = 7; //备兑持仓
+	int64 rights_frozen_qty = 8; //权利冻结仓
+	int64 oblig_frozen_qty = 9; //义务冻结仓
+	int64 cover_frozen_qty = 10; //备兑冻结仓
+	double rights_price = 11; //权利价格
+	double oblig_price = 12; //义务价格
+	int32 cum_rights_qty = 13; //当日权利仓开仓
+	int32 cum_oblig_qty = 14; //当日义务仓开仓
+	double profit_and_loss = 15; //盈亏
+	double rate_of_return = 16; //收益率
+	int32 excercise = 17; //行权标识;0未行权，1行权
+	uint32 vers = 18; //版本号
+	int64 create_time = 19; //创建时间
+	int64 update_time = 20; //更新时间
+}; 
+
+message RspSelOption
+{
+    repeated SelOption infos=1;
+};
+
+// 期权持仓流水查询
+message SelPositionLog
+{
+	uint32 tx_id = 1; //事务ID
+	uint32 upos_id = 2; //期权持仓ID
+	uint32 ustrategy_pos_id = 3; //组合策略持仓ID
+	uint32 uuser_id = 4; //用户ID
+	uint32 uoption_id = 5; //期权ID
+	uint32 uaccount_id = 6; //期权账户ID
+	int64 from_rights_qty = 7; //前权利持仓
+	int64 from_oblig_qty = 8; //前义务持仓
+	int64 from_cover_qty = 9; //前备兑持仓
+	int64 from_rights_frozen_qty = 10; //前权利冻结仓
+	int64 from_oblig_frozen_qty = 11; //前义务冻结仓
+	int64 from_cover_frozen_qty = 12; //前备兑冻结仓;买：权利仓，卖：义务仓
+	int64 to_rights_qty = 13; //后权利持仓
+	int64 to_oblig_qty = 14; //后义务持仓
+	int64 to_cover_qty = 15; //后备兑持仓
+	int64 to_rights_frozen_qty = 16; //后权利冻结仓
+	int64 to_oblig_frozen_qty = 17; //后义务冻结仓
+	int64 to_cover_frozen_qty = 18; //后备兑冻结仓
+	int64 create_time = 19; //创建时间
+}; 
+
+message RspSelPositionLog
+{
+    repeated SelPositionLog infos=1;
+};
+
+// 组合策略持仓查询
+message SelCombineStrategy
+{
+	uint32 id = 1; //
+	uint32 uoption_id1 = 2; //期权ID1
+	uint32 uoption_id2 = 3; //期权ID2
+	uint32 uoption_id3 = 4; //期权ID3
+	uint32 uoption_id4 = 5; //期权ID4
+	int32 strategy_type = 6; //策略代码;1=CNSJC;2=CXSJC;3=PNSJC;4=PXSJC;5=KS;6=KKS
+	int64 pos_qty = 7; //持仓数量
+	int64 frozen_qty = 8; //冻结持仓数量
+	uint32 upos_id1 = 9; //期权1持仓ID
+	uint32 upos_id2 = 10; //期权2持仓ID
+	uint32 upos_id3 = 11; //期权3持仓ID
+	uint32 upos_id4 = 12; //期权4持仓ID
+	uint32 uaccount_id = 13; //股东账户ID
+	uint32 uuser_id = 14; //用户ID
+};
+
+
+message RspSelCombineStrategy
+{
+    repeated SelCombineStrategy infos=1;
+};
+
+// 组合策略持仓流水查询
+message SelStrategyCombineLog
+{
+	uint32 id = 1; //
+	string appl_id = 2; //应用标志
+	string submitting_pbu_id = 3; //申报交易单元
+	string security_id = 4; //证券代码
+	string security_id_source = 5; //证券代码源
+	int32 owner_type = 6; //订单所有者类型
+	string clearing_firm = 7; //结算机构代码
+	int64 transact_time = 8; //委托时间
+	string user_info = 9; //用户私有信息
+	string cl_ord_id = 10; //客户订单编号
+	string account_id = 11; //证券账户
+	string branch_id = 12; //营业部代码
+	int32 order_restrictions = 13; //订单限定
+	int32 side = 14; //买卖方向
+	int32 ord_type = 15; //订单类别
+	int64 order_qty = 16; //订单数量;实时数量
+	int64 fronzen_qty = 17; //冻结数量
+	int64 price = 18; //价格
+	string contract_account_code = 19; //合约账户标识码
+	string security_type = 20; //证券类别
+	string security_sub_type = 21; //证券子类别
+	int32 strategy_status = 22; //策略状态;0=新订单1=构建成功2=构建失败3=完全解除4=完全执行5=已过期
+	string order_id = 23; //交易所订单编号
+	double strategy_margin = 24; //策略应收取保证金
+	double payoff_premium = 25; //增加的净权利金
+	string leg_security_id1 = 26; //期权1合约代码
+	string leg_security_id_source1 = 27; //期权1合约代码源
+	int32 leg_side1 = 28; //期权1成分合约方向
+	int64 leg_order_qty1 = 29; //期权1成份合约数量
+	int64 exec_price1 = 30; //期权1行权价格
+	double leg_open_margin1 = 31; //期权1开仓保证金
+	double leg_maintain_margin1 = 32; //期权1维持保证金
+	string leg_security_id2 = 33; //期权2合约代码
+	string leg_security_id_source2 = 34; //期权2合约代码源
+	int32 leg_side2 = 35; //期权2成分合约方向
+	int64 leg_order_qty2 = 36; //期权2成份合约数量
+	int64 exec_price2 = 37; //期权2行权价格
+	double leg_open_margin2 = 38; //期权2开仓保证金
+	double leg_maintain_margin2 = 39; //期权2维持保证金
+	string leg_security_id3 = 40; //期权3合约代码
+	string leg_security_id_source3 = 41; //期权3合约代码源
+	int32 leg_side3 = 42; //期权3成分合约方向
+	int64 leg_order_qty3 = 43; //期权3成份合约数量
+	int64 exec_price3 = 44; //期权3行权价格
+	double leg_open_margin3 = 45; //期权3开仓保证金
+	double leg_maintain_margin3 = 46; //期权3维持保证金
+	string leg_security_id4 = 47; //期权4合约代码
+	string leg_security_id_source4 = 48; //期权4合约代码源
+	int32 leg_side4 = 49; //期权4成分合约方向
+	int64 leg_order_qty4 = 50; //期权4成份合约数量
+	int64 exec_price4 = 51; //期权4行权价格
+	double leg_open_margin4 = 52; //期权4开仓保证金
+	double leg_maintain_margin4 = 53; //期权4维持保证金
+	int64 relief_order_qty = 54; //已解除数量
+	int64 exec_order_qty = 55; //已执行数量
+	int64 create_time = 56; //组合策略创建时间
+	uint32 strategy_version = 57; //策略版本号
+}; 
+
+message RspSelCombineStrategyLog
+{
+    repeated SelStrategyCombineLog infos=1;
+}

@@ -32,12 +32,12 @@ public class NettyRequestPool {
         return NettyRequestPool;
     }
 
-    private static final Map<Short, Promise<ProtocolCodec>> requestPool = new ConcurrentHashMap<>();
+    private static final Map<Integer, Promise<ProtocolCodec>> requestPool = new ConcurrentHashMap<>();
 
     /**
      * 添加请求的request
      */
-    public void addRequest(Short requestId, EventExecutor executor){
+    public void addRequest(Integer requestId, EventExecutor executor){
         requestPool.put(requestId, new DefaultPromise<ProtocolCodec>(executor));
     }
 
@@ -47,7 +47,7 @@ public class NettyRequestPool {
      * @return
      * @throws Exception
      */
-    public ProtocolCodec getResponse(Short requestId) throws Exception {
+    public ProtocolCodec getResponse(Integer requestId) throws Exception {
         //获取远程调用结果 10s超时
         Promise<ProtocolCodec> promise = requestPool.get(requestId);
         //no service provided

@@ -4,6 +4,8 @@ import com.huayun.option.entity.CodeMessage;
 import com.huayun.option.entity.Result;
 import com.huayun.option.utils.JsonUtil;
 import com.huayun.option.utils.JwtUtil;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
-        if (token.length()>0) {
+        if (StringUtils.hasLength(token)) {
             if (JwtUtil.verify(token)) {
                 return true;
             }

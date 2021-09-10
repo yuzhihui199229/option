@@ -1,5 +1,5 @@
 server:
-  port: 9607
+  port: 9606
 netty:
   ip: 192.168.2.105
   port: 5556

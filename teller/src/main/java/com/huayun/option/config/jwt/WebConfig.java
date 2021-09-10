@@ -13,9 +13,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtInterceptor())
-                //排除登录的路径
-                .excludePathPatterns("/tellInfo/login")
                 //有用的路径都要经过拦截器
-                .addPathPatterns("/**");
+                .addPathPatterns("/option/**")
+                //排除登录的路径,释放swagger-ui路径
+                .excludePathPatterns("/option/tellInfo/login");
     }
 }

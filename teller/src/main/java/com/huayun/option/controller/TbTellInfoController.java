@@ -10,6 +10,10 @@ import com.huayun.option.entity.TbTellInfo;
 import com.huayun.option.service.TbRoleInfoService;
 import com.huayun.option.service.TbTellInfoService;
 import com.huayun.option.utils.JwtUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
@@ -31,7 +35,8 @@ import java.util.stream.Stream;
  * @since 2021-08-31
  */
 @RestController
-@RequestMapping("/tellInfo")
+@RequestMapping("/option/tellInfo")
+@Api(tags = "柜员管理员信息")
 public class TbTellInfoController {
     @Autowired
     private TbTellInfoService tellInfoService;
@@ -39,13 +44,17 @@ public class TbTellInfoController {
     @Autowired
     private TbRoleInfoService roleInfoService;
 
-
-    @PostMapping("/login")
-    public Result login(@RequestBody TbTellInfo tellInfo) {
+    @GetMapping("/login")
+    @ApiOperation("登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "用户名",required = true),
+            @ApiImplicitParam(name = "password", value = "密码",required = true)
+    })
+    public Result login(String userName,String password) {
         //包装login的查询条件
         LambdaQueryWrapper<TbTellInfo> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(TbTellInfo::getUserName, tellInfo.getUserName())
-                .eq(TbTellInfo::getPassword, DigestUtils.md5DigestAsHex(tellInfo.getPassword().getBytes()));
+        wrapper.eq(TbTellInfo::getUserName, userName)
+                .eq(TbTellInfo::getPassword, DigestUtils.md5DigestAsHex(password.getBytes()));
         //查询该用户是否存在
         TbTellInfo tellInfoRsp = tellInfoService.getOne(wrapper);
         if (tellInfoRsp != null) {

@@ -15,5 +15,4 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface RpcProxy {
    ParseType parseType();
-   FuncNo funcNo() default FuncNo.FUNC_NO_NULL;
 }
