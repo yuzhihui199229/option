@@ -5,7 +5,7 @@ import com.huayun.option.model.ParseType;
 import com.huayun.option.protobuf.Protocol;
 
 /**
- * 用户
+ * ProtoBuf解析方式
  */
 @RpcProxy(parseType = ParseType.PROTOBUF)
 public interface ProtoBufService {
