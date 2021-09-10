@@ -1,11 +1,14 @@
 package com.huayun.option.controller;
 
+import com.huayun.option.model.MagicNo;
 import com.huayun.option.protobuf.Protocol;
 import com.huayun.option.request.ReqLogin;
 import com.huayun.option.request.ReqUserInfo;
+import com.huayun.option.response.Result;
 import com.huayun.option.response.RspLogin;
 import com.huayun.option.response.RspUserInfo;
 import com.huayun.option.service.ProtoBufService;
+import com.huayun.option.utils.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -24,37 +27,37 @@ public class UserController {
 
     @PostMapping("/getUserInfoList")
     @ApiOperation(value = "根据用户id，查询相关的用户信息")
-    public RspUserInfo getUserInfoList(@RequestBody ReqUserInfo reqUserInfo) {
+    public Result getUserInfoList(@RequestBody ReqUserInfo reqUserInfo) {
         //将reqUserInfo转化为byte数组
         byte[] reqBytes = reqUserInfo.getBytes();
-        RspUserInfo result = null;
         try {
             Protocol protocol = protoBufService.protoBufTurn(reqBytes);
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protocol.getBody();
             //将byte数组转化为需要的数据
-            result = new RspUserInfo().getRspUserInfo(rspBytes);
+            RspUserInfo rspUserInfo = new RspUserInfo().getRspUserInfo(rspBytes);
+            return ResultUtil.getResult(protocol,rspUserInfo);
         } catch (Exception e) {
             e.printStackTrace();
+            return new Result(MagicNo.SYSTEM_ERROR, e.getMessage());
         }
-        return result;
     }
 
     @PostMapping("/login")
     @ApiOperation(value = "登录")
-    public RspLogin login(@RequestBody ReqLogin reqLogin) {
+    public Result login(@RequestBody ReqLogin reqLogin) {
         //将reqUserInfo转化为byte数组
         byte[] reqBytes = reqLogin.getBytes();
-        RspLogin result = null;
         try {
             Protocol protocol = protoBufService.protoBufTurn(reqBytes);
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protocol.getBody();
             //将byte数组转化为需要的数据
-            result = new RspLogin().getRspLogin(rspBytes);
+            RspLogin rspLogin = new RspLogin().getRspLogin(rspBytes);
+            return ResultUtil.getResult(protocol, rspLogin);
         } catch (Exception e) {
             e.printStackTrace();
+            return new Result(MagicNo.SYSTEM_ERROR, e.getMessage());
         }
-        return result;
     }
 }

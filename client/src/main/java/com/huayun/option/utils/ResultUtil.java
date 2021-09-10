@@ -1,19 +1,18 @@
 package com.huayun.option.utils;
 
+import com.huayun.option.codec.ProtocolCodec;
 import com.huayun.option.model.ClientMgrCode;
+import com.huayun.option.protobuf.ClientMgr;
 import com.huayun.option.protobuf.Protocol;
 import com.huayun.option.response.Result;
-import com.huayun.option.response.RspSelAssetInfo;
-
-import java.util.List;
 
 public class ResultUtil {
     /**
-     * 封装result的code和对应的message
+     * protocol 封装 result 的 code 和对应的 message
      * @param protocol
      * @return
      */
-    public static <T> Result getResult(Protocol protocol, List<T> list) {
+    public static Result getResult(Protocol protocol, Object data) {
         Result result = new Result();
         int retCode = protocol.getHead().getRetCode();
         result.setCode(retCode);
@@ -24,7 +23,8 @@ public class ResultUtil {
                 break;
             }
         }
-        result.setData(list);
+        result.setData(data);
         return result;
     }
+
 }
