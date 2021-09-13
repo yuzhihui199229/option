@@ -2,7 +2,9 @@ package com.huayun.option.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+@Data
 @ApiModel(value = "RspCoveredOpen",description = "备兑开仓应答")
 public class RspCoveredOpen {
 

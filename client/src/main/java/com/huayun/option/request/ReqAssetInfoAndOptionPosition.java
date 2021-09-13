@@ -13,8 +13,8 @@ import java.nio.ByteOrder;
 
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "ReqAssetInfo", description = "资金信息")
-public class ReqAssetInfo {
+@ApiModel(value = "ReqAssetInfoAndOptionPosition", description = "资金信息和期权持仓公共请求")
+public class ReqAssetInfoAndOptionPosition implements BaseRequest{
 
     @ApiModelProperty(value = "token",required = true)
     private String  token;
@@ -22,7 +22,12 @@ public class ReqAssetInfo {
     @ApiModelProperty(value = "用户id",required = true)
     private Integer  uuserId;
 
-    public byte[] getBytes() {
+    /**
+     * 将请求的参数转化为字节数组
+     * @return
+     */
+    @Override
+    public byte[] formatRequest() {
         //设置输入的参数
         ClientMgr.ReqSelInterface.Builder builder = ClientMgr.ReqSelInterface.newBuilder();
         builder.setToken(this.token);

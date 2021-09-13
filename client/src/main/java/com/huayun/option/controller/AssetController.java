@@ -1,9 +1,8 @@
 package com.huayun.option.controller;
 
-import com.huayun.option.model.ClientMgrCode;
 import com.huayun.option.model.MagicNo;
 import com.huayun.option.protobuf.Protocol;
-import com.huayun.option.request.ReqAssetInfo;
+import com.huayun.option.request.ReqAssetInfoAndOptionPosition;
 import com.huayun.option.request.ReqAssetLog;
 import com.huayun.option.response.Result;
 import com.huayun.option.response.RspSelAssetInfo;
@@ -29,15 +28,15 @@ public class AssetController {
 
     @PostMapping("/getAssetInfo")
     @ApiOperation(value = "资金查询")
-    public Result getAssetInfo(@RequestBody ReqAssetInfo reqAssetInfo) {
-        //将reqUserInfo转化为byte数组
-        byte[] reqBytes = reqAssetInfo.getBytes();
+    public Result getAssetInfo(@RequestBody ReqAssetInfoAndOptionPosition reqAssetInfo) {
+        //将请求参数转化为byte数组
+        byte[] reqBytes = reqAssetInfo.formatRequest();
         try {
             Protocol protocol = protoBufService.protoBufTurn(reqBytes);
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protocol.getBody();
             //将byte数组转化为需要的数据
-            List<RspSelAssetInfo> list = new RspSelAssetInfo().getRspSelAssetInfo(rspBytes);
+            List<RspSelAssetInfo> list = new RspSelAssetInfo().parseResponseList(rspBytes);
             //将结果封装并返回
             return ResultUtil.getResult(protocol,list);
         } catch (Exception e) {
@@ -49,14 +48,14 @@ public class AssetController {
     @PostMapping("/getAssetLog")
     @ApiOperation(value = "资金流水查询")
     public Result getAssetLog(@RequestBody ReqAssetLog reqAssetLog) {
-        //将reqUserInfo转化为byte数组
+        //将请求参数转化为byte数组
         byte[] reqBytes = reqAssetLog.getBytes();
         try {
             Protocol protocol = protoBufService.protoBufTurn(reqBytes);
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protocol.getBody();
             //将byte数组转化为需要的数据
-            List<RspSelAssetLog> list = new RspSelAssetLog().getRspSelAssetLog(rspBytes);
+            List<RspSelAssetLog> list = new RspSelAssetLog().parseResponseList(rspBytes);
             //将结果封装并返回
             return ResultUtil.getResult(protocol, list);
         } catch (Exception e) {

@@ -58,7 +58,7 @@ public class RspSelAssetLog {
      * @return
      * @throws InvalidProtocolBufferException
      */
-    public List<RspSelAssetLog> getRspSelAssetLog(byte[] bytes) throws InvalidProtocolBufferException {
+    public List<RspSelAssetLog> parseResponseList(byte[] bytes) throws InvalidProtocolBufferException {
         //将字节码数组通过protobuf转化
         ClientMgr.RspSelAssetLog rspSelAssetLogProto = ClientMgr.RspSelAssetLog.parseFrom(bytes);
         List<ClientMgr.SelAssetLog> list = rspSelAssetLogProto.getInfosList();

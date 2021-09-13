@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/getUserInfoList")
     @ApiOperation(value = "根据用户id，查询相关的用户信息")
     public Result getUserInfoList(@RequestBody ReqUserInfo reqUserInfo) {
-        //将reqUserInfo转化为byte数组
+        //将请求参数转化为byte数组
         byte[] reqBytes = reqUserInfo.getBytes();
         try {
             Protocol protocol = protoBufService.protoBufTurn(reqBytes);
@@ -46,14 +46,14 @@ public class UserController {
     @PostMapping("/login")
     @ApiOperation(value = "登录")
     public Result login(@RequestBody ReqLogin reqLogin) {
-        //将reqUserInfo转化为byte数组
+        //将请求参数转化为byte数组
         byte[] reqBytes = reqLogin.getBytes();
         try {
             Protocol protocol = protoBufService.protoBufTurn(reqBytes);
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protocol.getBody();
             //将byte数组转化为需要的数据
-            RspLogin rspLogin = new RspLogin().getRspLogin(rspBytes);
+            RspLogin rspLogin = new RspLogin().parseResponse(rspBytes);
             return ResultUtil.getResult(protocol, rspLogin);
         } catch (Exception e) {
             e.printStackTrace();

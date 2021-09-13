@@ -12,24 +12,58 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "RspSelAssetInfo",description = "资金信息响应")
-public class RspSelAssetInfo {
+@ApiModel(value = "RspOptionPosition",description = "期权持仓查询接口出参")
+public class RspOptionPosition {
+    @ApiModelProperty(value = "id")
     private Integer id;
-
-    @ApiModelProperty(value = "保证金账户")
-    private String assetAccount;
 
     @ApiModelProperty(value = "用户ID")
     private Integer uuserId;
 
-    @ApiModelProperty(value = "日间余额")
-    private Double balance;
+    @ApiModelProperty(value = "期权ID")
+    private Integer uoptionId;
 
-    @ApiModelProperty(value = "冻结资金")
-    private Double frozen;
+    @ApiModelProperty(value = "合约账户ID")
+    private Integer ucontractId;
 
-    @ApiModelProperty(value = "实时保证金")
-    private Double marginAmount;
+    @ApiModelProperty(value = "权利仓")
+    private Integer rightsQty;
+
+    @ApiModelProperty(value = "义务仓")
+    private Long obligQty;
+
+    @ApiModelProperty(value = "备兑持仓")
+    private Long coverQty;
+
+    @ApiModelProperty(value = "权利冻结仓")
+    private Long rightsFrozenQty;
+
+    @ApiModelProperty(value = "义务冻结仓")
+    private Long obligFrozenQty;
+
+    @ApiModelProperty(value = "备兑冻结仓")
+    private Long coverFrozenQty;
+
+    @ApiModelProperty(value = "权利价格")
+    private Double rightsPrice;
+
+    @ApiModelProperty(value = "义务价格")
+    private Double obligPrice;
+
+    @ApiModelProperty(value = "当日权利仓开仓数量")
+    private Integer cumRightsQty;
+
+    @ApiModelProperty(value = "当日义务仓开仓数量")
+    private Integer cumObligQty;
+
+    @ApiModelProperty(value = "盈亏")
+    private Double profitAndLoss;
+
+    @ApiModelProperty(value = "收益率")
+    private Double rateOfReturn;
+
+    @ApiModelProperty(value = "行权标识：数据字典100021")
+    private Byte excercise;
 
     @ApiModelProperty(value = "注册时间")
     private Long createTime;
@@ -37,7 +71,7 @@ public class RspSelAssetInfo {
     @ApiModelProperty(value = "更新时间")
     private Long updateTime;
 
-    @ApiModelProperty(value = "资金版本号")
+    @ApiModelProperty(value = "版本号")
     private Integer vers;
 
     /**
@@ -46,7 +80,7 @@ public class RspSelAssetInfo {
      * @return
      * @throws InvalidProtocolBufferException
      */
-    public List<RspSelAssetInfo> parseResponseList(byte[] bytes) throws InvalidProtocolBufferException {
+    public List<RspOptionPosition> parseResponse(byte[] bytes) throws InvalidProtocolBufferException {
         //将字节码数组通过protobuf转化
         ClientMgr.RspSelAssetInfo rspSelAssetInfoProto = ClientMgr.RspSelAssetInfo.parseFrom(bytes);
         List<ClientMgr.SelAssetInfo> list = rspSelAssetInfoProto.getInfosList();
@@ -65,7 +99,7 @@ public class RspSelAssetInfo {
                     .setVers(selAssetInfo.getVers());
             rspList.add(rspSelAssetInfo);
         }
-        return rspList;
+        return null;
     }
 
 }

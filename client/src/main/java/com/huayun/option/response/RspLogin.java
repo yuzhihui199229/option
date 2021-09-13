@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "RspLoginZmq", description = "登录应答")
-public class RspLogin {
+public class RspLogin implements BaseResponse{
 
     @ApiModelProperty(value = "token,", dataType = "Char[32]")
     private String token;
@@ -30,7 +30,7 @@ public class RspLogin {
      * @return
      * @throws InvalidProtocolBufferException
      */
-    public RspLogin getRspLogin(byte[] bytes) throws InvalidProtocolBufferException {
+    public RspLogin parseResponse(byte[] bytes) throws InvalidProtocolBufferException {
         //将字节码数组通过protobuf转化
         ClientMgr.RspLogin rspLoginProto = ClientMgr.RspLogin.parseFrom(bytes);
         //将ClientMgr.RspLogin中的数据封装到RspLogin中
@@ -41,4 +41,8 @@ public class RspLogin {
         return rspLogin;
     }
 
+    @Override
+    public byte[] parseResponse()  throws InvalidProtocolBufferException{
+        return new byte[0];
+    }
 }
