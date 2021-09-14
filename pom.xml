@@ -27,6 +27,7 @@
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <rpc.version>1.0.0-SNAPSHOT</rpc.version>
         <java-jwt.version>3.13.0</java-jwt.version>
+        <protobuf-java-util.version>3.17.3</protobuf-java-util.version>
     </properties>
 
     <packaging>pom</packaging>
@@ -87,6 +88,12 @@
                 <artifactId>java-jwt</artifactId>
                 <version>${java-jwt.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java-util</artifactId>
+                <version>${protobuf-java-util.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

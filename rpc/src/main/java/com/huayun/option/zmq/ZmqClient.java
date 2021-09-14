@@ -16,40 +16,6 @@ import java.nio.ByteOrder;
  */
 public class ZmqClient {
 
-//    public static void main(String[] args) {
-//        createConnect("localhost", 9999);
-//        socket.send("getSingle");
-//        byte[] recv = socket.recv();
-//        System.out.println("客户端接收的是: [" + new String(recv) + "]");
-//    }
-
-//    private static ZMQ.Socket socket;
-//
-//    /**
-//     * zmq发送消息
-//     * @param bytes
-//     * @return
-//     * @throws Exception
-//     */
-//    public static Protocol sendMessage(byte[] bytes) throws Exception {
-//        socket.send(bytes);
-//        byte[] receive = socket.recv();
-//        ByteBuffer receiveBuffer = ByteBuffer.wrap(receive);
-//        //复制headLen到headBuffer中
-//        ByteBuffer headBuffer = receiveBuffer.get(new byte[MagicNo.headLen], 0, MagicNo.headLen);
-//        //获取应答头
-//        Head head = parseHead(headBuffer);
-//        //复制headLen之后的字节到body数组
-//        int bodyLen = receive.length - MagicNo.headLen;
-//        byte[] body = new byte[bodyLen];
-//        if (receive.length > MagicNo.headLen)
-//            System.arraycopy(receive, MagicNo.headLen,body,0,bodyLen);
-//        Protocol protocol = new Protocol();
-//        protocol.setHead(head)
-//                .setBody(body);
-//        return protocol;
-//    }
-
     /**
      * zmq发送消息
      * @param bytes

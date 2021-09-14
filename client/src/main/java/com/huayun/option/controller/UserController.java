@@ -31,7 +31,7 @@ public class UserController {
         //将请求参数转化为byte数组
         byte[] reqBytes = reqUserInfo.getBytes();
         try {
-            Protocol protocol = protoBufService.protoBufTurn(reqBytes);
+            Protocol protocol = protoBufService.parseByprotoBuf(reqBytes);
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protocol.getBody();
             //将byte数组转化为需要的数据
@@ -49,7 +49,7 @@ public class UserController {
         //将请求参数转化为byte数组
         byte[] reqBytes = reqLogin.getBytes();
         try {
-            Protocol protocol = protoBufService.protoBufTurn(reqBytes);
+            Protocol protocol = protoBufService.parseByprotoBuf(reqBytes);
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protocol.getBody();
             //将byte数组转化为需要的数据

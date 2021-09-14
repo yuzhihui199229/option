@@ -2,11 +2,9 @@ package com.huayun.option.controller;
 
 import com.huayun.option.model.MagicNo;
 import com.huayun.option.protobuf.Protocol;
-import com.huayun.option.request.ReqAssetInfoAndOptionPosition;
-import com.huayun.option.request.ReqUserInfo;
+import com.huayun.option.request.ReqOptionPosition;
 import com.huayun.option.response.Result;
-import com.huayun.option.response.RspOptionPosition;
-import com.huayun.option.response.RspUserInfo;
+import com.huayun.option.response.RspSelOption;
 import com.huayun.option.service.ProtoBufService;
 import com.huayun.option.utils.ResultUtil;
 import io.swagger.annotations.Api;
@@ -28,16 +26,16 @@ public class PositionController {
 
     @PostMapping("/getOptionPositionList")
     @ApiOperation(value = "根据用户id，查询相关的持仓信息")
-    public Result getOptionPositionList(@RequestBody ReqAssetInfoAndOptionPosition reqOptionPositionInfo) {
-        //将请求参数转化为byte数组
-        byte[] reqBytes = reqOptionPositionInfo.formatRequest();
+    public Result getOptionPositionList(@RequestBody ReqOptionPosition reqOptionPosition,Integer uuserId) {
         try {
-            Protocol protocol = protoBufService.protoBufTurn(reqBytes);
+            //将请求参数转化为byte数组
+            byte[] reqBytes = reqOptionPosition.formatRequest(uuserId);
             //向服务端发送数据并接收服务端消息
+            Protocol protocol = protoBufService.parseByprotoBuf(reqBytes);
             byte[] rspBytes = protocol.getBody();
             //将byte数组转化为需要的数据
-            List<RspOptionPosition> rspOptionPositions = new RspOptionPosition().parseResponse(rspBytes);
-            return ResultUtil.getResult(protocol,rspOptionPositions);
+            List<RspSelOption> rspOptionPositions = new RspSelOption().parseResponse(rspBytes);
+            return ResultUtil.getResult(protocol, rspOptionPositions);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(MagicNo.SYSTEM_ERROR, e.getMessage());

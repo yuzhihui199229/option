@@ -14,6 +14,6 @@ public interface ProtoBufService {
      * @param bytes
      * @return
      */
-    Protocol protoBufTurn(byte[] bytes);
+    Protocol parseByprotoBuf(byte[] bytes);
 
 }

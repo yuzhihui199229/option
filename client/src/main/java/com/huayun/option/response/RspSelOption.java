@@ -12,8 +12,8 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "RspOptionPosition",description = "期权持仓查询接口出参")
-public class RspOptionPosition {
+@ApiModel(value = "RspSelOption", description = "期权持仓查询接口出参")
+public class RspSelOption extends BaseResponse<RspSelOption> {
     @ApiModelProperty(value = "id")
     private Integer id;
 
@@ -24,10 +24,10 @@ public class RspOptionPosition {
     private Integer uoptionId;
 
     @ApiModelProperty(value = "合约账户ID")
-    private Integer ucontractId;
+    private Integer uaccountId;
 
     @ApiModelProperty(value = "权利仓")
-    private Integer rightsQty;
+    private Long rightsQty;
 
     @ApiModelProperty(value = "义务仓")
     private Long obligQty;
@@ -63,7 +63,7 @@ public class RspOptionPosition {
     private Double rateOfReturn;
 
     @ApiModelProperty(value = "行权标识：数据字典100021")
-    private Byte excercise;
+    private Integer excercise;
 
     @ApiModelProperty(value = "注册时间")
     private Long createTime;
@@ -76,28 +76,31 @@ public class RspOptionPosition {
 
     /**
      * 将字节码数组转化为RspSelAssetInfo
+     *
      * @param bytes
      * @return
      * @throws InvalidProtocolBufferException
      */
-    public List<RspOptionPosition> parseResponse(byte[] bytes) throws InvalidProtocolBufferException {
+    public List<RspSelOption> parseResponse(byte[] bytes) throws InvalidProtocolBufferException {
         //将字节码数组通过protobuf转化
-        ClientMgr.RspSelAssetInfo rspSelAssetInfoProto = ClientMgr.RspSelAssetInfo.parseFrom(bytes);
-        List<ClientMgr.SelAssetInfo> list = rspSelAssetInfoProto.getInfosList();
-        List<RspSelAssetInfo> rspList = new ArrayList<>();
-        for (ClientMgr.SelAssetInfo selAssetInfo : list) {
-            //将ClientMgr.SelAssetInfo 中的数据封装到 RspSelAssetInfo 中
-            RspSelAssetInfo rspSelAssetInfo = new RspSelAssetInfo();
-            rspSelAssetInfo.setId(selAssetInfo.getId())
-                    .setAssetAccount(selAssetInfo.getAssetAccount())
-                    .setUuserId(selAssetInfo.getUuserId())
-                    .setBalance(selAssetInfo.getBalance())
-                    .setFrozen(selAssetInfo.getFrozen())
-                    .setMarginAmount(selAssetInfo.getMarginAmount())
-                    .setCreateTime(selAssetInfo.getCreateTime())
-                    .setUpdateTime(selAssetInfo.getUpdateTime())
-                    .setVers(selAssetInfo.getVers());
-            rspList.add(rspSelAssetInfo);
+        ClientMgr.RspSelOption rspSelOptionProtobuf = ClientMgr.RspSelOption.parseFrom(bytes);
+        List<ClientMgr.SelOption> list = rspSelOptionProtobuf.getInfosList();
+        List<RspSelOption> rspList = new ArrayList<>();
+        for (ClientMgr.SelOption selOption : list) {
+            //将ClientMgr 中的数据封装到这个对象中r
+            RspSelOption rspSelOption = new RspSelOption();
+            rspSelOption.setId(selOption.getId())
+                    .setUuserId(selOption.getUuserId())
+                    .setUoptionId(selOption.getUoptionId())
+                    .setUaccountId(selOption.getUaccountId())
+                    .setRightsQty(selOption.getRightsQty())
+                    .setObligQty(selOption.getObligQty())
+                    .setCoverQty(selOption.getCoverQty())
+                    .setCumRightsQty(selOption.getCumRightsQty())
+                    .setProfitAndLoss(selOption.getProfitAndLoss())
+                    .setRateOfReturn(selOption.getRateOfReturn())
+                    .setExcercise(selOption.getExcercise());
+            rspList.add(rspSelOption);
         }
         return null;
     }

@@ -2,6 +2,7 @@ package com.huayun.option.controller;
 
 import com.huayun.option.request.ReqLogin;
 import com.huayun.option.request.ReqUserInfo;
+import com.huayun.option.response.Result;
 import com.huayun.option.response.RspLogin;
 import com.huayun.option.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -116,14 +118,15 @@ class UserControllerTest {
                 //获取返回值
                 .andReturn();
         String responseStr = mvcResult.getResponse().getContentAsString(Charset.defaultCharset());
-        RspLogin result = JsonUtil.jsonToPojo(responseStr, RspLogin.class);
-        String token = result.getToken();
-        Integer id = result.getId();
-        Integer uuserID = result.getUuserID();
+        //将返回值转化为对象打印出来
+        log.info(responseStr);
+        Result result = JsonUtil.jsonToPojo(responseStr, Result.class);
+        Map<String,Object> data = (Map<String,Object>)result.getData();
+        String token = (String) data.get("token");
+        int id = (int)data.get("id");
+        int uuserID = (int)data.get("uuserID");
         writeTokenToTxt(token,"token.txt");
         writeTokenToTxt(id+"","sessionID.txt");
         writeTokenToTxt(uuserID+"","uuserID.txt");
-        //将返回值转化为对象打印出来
-        log.info(mvcResult.getResponse().getContentAsString(Charset.defaultCharset()));
     }
 }

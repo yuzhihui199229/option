@@ -1,8 +1,7 @@
 package com.huayun.option.controller;
 
-import com.huayun.option.request.ReqAssetInfo;
+import com.huayun.option.request.ReqAssetInfoAndOptionPosition;
 import com.huayun.option.request.ReqAssetLog;
-import com.huayun.option.request.ReqUserInfo;
 import com.huayun.option.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -14,10 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -33,12 +30,11 @@ class AssetControllerTest {
         String token = UserControllerTest.readTokenFromTxt("token.txt");
         String uuserID = UserControllerTest.readTokenFromTxt("uuserID.txt");
         //封装请求的数据
-        ReqAssetInfo reqAssetInfo = new ReqAssetInfo();
-        reqAssetInfo.setToken(token)
-                .setUuserId(Integer.parseInt(uuserID));
+        ReqAssetInfoAndOptionPosition reqAssetInfo = new ReqAssetInfoAndOptionPosition();
+        reqAssetInfo.setToken(token);
         MvcResult mvcResult = mockMvc.perform(
                 //请求的方法
-                post("/asset/getAssetInfo")
+                post("/asset/getAssetInfo/"+uuserID)
                         //输入的数据类型
                         .contentType(MediaType.APPLICATION_JSON)
                         //输入的数据
