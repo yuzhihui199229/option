@@ -32,7 +32,7 @@ public class PositionController {
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protoBufService.parseByprotoBuf(reqBytes);
             //将byte数组转化为需要的数据
-            Protocol protocol = new RspSelCombineStrategy().parseResponse(rspBytes);
+            Protocol protocol = new RspSelOption().parseResponse(rspBytes);
             return ResultUtil.getResult(protocol);
         } catch (Exception e) {
             e.printStackTrace();
