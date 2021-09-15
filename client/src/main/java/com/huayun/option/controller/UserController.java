@@ -28,15 +28,14 @@ public class UserController {
     @PostMapping("/getUserInfoList")
     @ApiOperation(value = "根据用户id，查询相关的用户信息")
     public Result getUserInfoList(@RequestBody ReqUserInfo reqUserInfo) {
-        //将请求参数转化为byte数组
-        byte[] reqBytes = reqUserInfo.getBytes();
         try {
-            Protocol protocol = protoBufService.parseByprotoBuf(reqBytes);
+            //将请求参数转化为byte数组
+            byte[] reqBytes = reqUserInfo.getBytes();
             //向服务端发送数据并接收服务端消息
-            byte[] rspBytes = protocol.getBody();
+            byte[] rspBytes = protoBufService.parseByprotoBuf(reqBytes);
             //将byte数组转化为需要的数据
-            RspUserInfo rspUserInfo = new RspUserInfo().getRspUserInfo(rspBytes);
-            return ResultUtil.getResult(protocol,rspUserInfo);
+            Protocol protocol = new RspUserInfo().parseResponse(rspBytes);
+            return ResultUtil.getResult(protocol);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(MagicNo.SYSTEM_ERROR, e.getMessage());
@@ -46,15 +45,14 @@ public class UserController {
     @PostMapping("/login")
     @ApiOperation(value = "登录")
     public Result login(@RequestBody ReqLogin reqLogin) {
-        //将请求参数转化为byte数组
-        byte[] reqBytes = reqLogin.getBytes();
         try {
-            Protocol protocol = protoBufService.parseByprotoBuf(reqBytes);
+            //将请求参数转化为byte数组
+            byte[] reqBytes = reqLogin.getBytes();
             //向服务端发送数据并接收服务端消息
-            byte[] rspBytes = protocol.getBody();
+            byte[] rspBytes = protoBufService.parseByprotoBuf(reqBytes);
             //将byte数组转化为需要的数据
-            RspLogin rspLogin = new RspLogin().parseResponse(rspBytes);
-            return ResultUtil.getResult(protocol, rspLogin);
+            Protocol protocol = new RspLogin().parseResponse(rspBytes);
+            return ResultUtil.getResult(protocol);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(MagicNo.SYSTEM_ERROR, e.getMessage());

@@ -14,7 +14,7 @@ import java.nio.ByteOrder;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "ReqAssetInfo", description = "资金流水请求")
-public class ReqAssetLog extends BaseRequest<ReqAssetLog>{
+public class ReqAssetLog extends BaseRequest{
 
 
     @ApiModelProperty(value = "token",required = true)

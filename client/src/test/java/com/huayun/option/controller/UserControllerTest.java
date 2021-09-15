@@ -36,7 +36,7 @@ class UserControllerTest {
     void getUserInfoList() throws Exception {
         //封装请求的数据
         ReqUserInfo reqUserInfo = new ReqUserInfo();
-        reqUserInfo.setUserId("my_id");
+        reqUserInfo.setUserId("wenw");
         MvcResult mvcResult = mockMvc.perform(
                 //请求的方法
                 post("/user/getUserInfoList")
@@ -121,10 +121,10 @@ class UserControllerTest {
         //将返回值转化为对象打印出来
         log.info(responseStr);
         Result result = JsonUtil.jsonToPojo(responseStr, Result.class);
-        Map<String,Object> data = (Map<String,Object>)result.getData();
-        String token = (String) data.get("token");
-        int id = (int)data.get("id");
-        int uuserID = (int)data.get("uuserID");
+        RspLogin data = JsonUtil.jsonToPojo((String) result.getData(), RspLogin.class);
+        String token = data.getToken();
+        int id = data.getId();
+        int uuserID = data.getUuserId();
         writeTokenToTxt(token,"token.txt");
         writeTokenToTxt(id+"","sessionID.txt");
         writeTokenToTxt(uuserID+"","uuserID.txt");

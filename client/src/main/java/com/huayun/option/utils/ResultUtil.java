@@ -12,7 +12,7 @@ public class ResultUtil {
      * @param protocol
      * @return
      */
-    public static Result getResult(Protocol protocol, Object data) {
+    public static Result getResult(Protocol protocol) {
         Result result = new Result();
         int retCode = protocol.getHead().getRetCode();
         result.setCode(retCode);
@@ -23,7 +23,7 @@ public class ResultUtil {
                 break;
             }
         }
-        result.setData(data);
+        result.setData(protocol.getBody());
         return result;
     }
 

@@ -14,12 +14,11 @@ import java.io.IOException;
  *  <li>bytes会转化为utf8编码的字符串</li>
  * </ul>
  */
-public class ProtoJsonUtils {
+public class ProtoJsonUtil {
 
     public static String toJson(Message sourceMessage)
             throws IOException {
-        String json = JsonFormat.printer().print(sourceMessage);
-        return json;
+        return JsonFormat.printer().print(sourceMessage);
     }
 
     public static Message toProtoBean(Message.Builder targetBuilder, String json) throws IOException {

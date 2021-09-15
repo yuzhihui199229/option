@@ -44,8 +44,7 @@ public class RPCInvocationHandler implements InvocationHandler {
             //获取到该接口所对应的zmqSocket对象
             ZMQ.Socket zmqSocket = ChannelPool.getZmqSocket(className + "-" + parseType.name());
             //zmq向服务端发送消息
-            Protocol protocol = ZmqClient.sendMessage(bytes, zmqSocket);
-            return protocol;
+            return ZmqClient.sendMessage(bytes, zmqSocket);
         } else {
             //获取的到参数
             ProtocolCodec protocolCodec=(ProtocolCodec)args[0];

@@ -12,7 +12,7 @@ import java.io.IOException;
 @Data
 @Accessors(chain = true)
 @ApiModel(value = "ReqOptionPosition", description = "期权持仓")
-public class ReqOptionPosition extends ReqAssetInfoAndOptionPosition {
+public class ReqOptionPosition extends ReqSelInterface {
 
     /**
      * 将请求的参数转化为字节数组
@@ -27,6 +27,6 @@ public class ReqOptionPosition extends ReqAssetInfoAndOptionPosition {
         //消息体封装
         ClientMgr.ReqSelInterface.Builder body = ClientMgr.ReqSelInterface.newBuilder();
         body.setToken(token);
-        return formatBaseRequest(head, body);
+        return formatRequest(head, body);
     }
 }

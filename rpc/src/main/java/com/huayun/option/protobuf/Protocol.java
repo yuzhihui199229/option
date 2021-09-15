@@ -14,5 +14,5 @@ public class Protocol {
     /**
      * 请求体
      */
-    private byte[] body;
+    private Object body;
 }

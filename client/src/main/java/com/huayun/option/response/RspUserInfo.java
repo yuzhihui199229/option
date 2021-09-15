@@ -3,11 +3,14 @@ package com.huayun.option.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.huayun.option.protobuf.ClientMgr;
+import com.huayun.option.protobuf.Protocol;
+import com.huayun.option.utils.ProtoJsonUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Accessors(chain = true)
 @ApiModel(value = "RspUserInfo",description = "查询用户信息,响应")
-public class RspUserInfo {
+public class RspUserInfo extends BaseResponse{
     @ApiModelProperty(name = "用户id")
     private String userId;
 
@@ -85,4 +88,23 @@ public class RspUserInfo {
         }
         return rspUserInfoList;
     }
+
+    /**
+     * 将字节码数组转化为Protocol
+     * @param bytes
+     * @return
+     * @throws InvalidProtocolBufferException
+     */
+    @Override
+    public Protocol parseResponse(byte[] bytes) throws IOException {
+        Protocol protocol = super.parseResponse(bytes);
+        byte[] bodyBytes = (byte[]) protocol.getBody();
+        //将字节码数组通过protobuf转化
+        ClientMgr.RspUserInfo protobuf = ClientMgr.RspUserInfo.parseFrom(bodyBytes);
+        //protobuf转化为json
+        String body = ProtoJsonUtil.toJson(protobuf);
+        protocol.setBody(body);
+        return protocol;
+    }
+
 }

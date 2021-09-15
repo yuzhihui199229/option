@@ -2,22 +2,18 @@ package com.huayun.option.request;
 
 import com.google.protobuf.Message;
 import com.huayun.option.model.MagicNo;
-import com.huayun.option.model.MsgId;
-import com.huayun.option.protobuf.ClientMgr;
 import com.huayun.option.protobuf.Head;
-import com.huayun.option.utils.JsonUtil;
-import com.huayun.option.utils.ProtoJsonUtils;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class BaseRequest<T> {
+public class BaseRequest {
     /**
      * 格式化请求
      * @return
      */
-    protected byte[] formatBaseRequest(Head head,Message.Builder body) throws IOException {
+    protected byte[] formatRequest(Head head, Message.Builder body) throws IOException {
         //获取body的字节
         byte[] bodyByteArray = body.build().toByteArray();
         //获取body的长度

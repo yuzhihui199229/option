@@ -1,7 +1,6 @@
 package com.huayun.option.controller;
 
-import com.huayun.option.request.ReqSelInterface;
-import com.huayun.option.request.ReqAssetLog;
+import com.huayun.option.request.ReqOptionPosition;
 import com.huayun.option.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -20,47 +19,25 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Slf4j
-class AssetControllerTest {
+class PositionControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("查询资金信息")
-    void getAssetInfo() throws Exception {
+    @DisplayName("期权持仓查询")
+    void getOptionPositionList() throws Exception {
         String token = UserControllerTest.readTokenFromTxt("token.txt");
         String uuserID = UserControllerTest.readTokenFromTxt("uuserID.txt");
         //封装请求的数据
-        ReqSelInterface reqAssetInfo = new ReqSelInterface();
-        reqAssetInfo.setToken(token);
+        ReqOptionPosition request = new ReqOptionPosition();
+        request.setToken(token);
         MvcResult mvcResult = mockMvc.perform(
                 //请求的方法
-                post("/asset/getAssetInfo/"+uuserID)
+                post("/position/getOptionPositionList/"+uuserID)
                         //输入的数据类型
                         .contentType(MediaType.APPLICATION_JSON)
                         //输入的数据
-                        .content(JsonUtil.objectToJson(reqAssetInfo)))
-                //获取返回值
-                .andReturn();
-        //将返回值转化为对象打印出来
-        log.info(mvcResult.getResponse().getContentAsString(Charset.defaultCharset()));
-    }
-
-    @Test
-    @DisplayName("查询流水信息")
-    void getAssetLog() throws Exception {
-        String token = UserControllerTest.readTokenFromTxt("token.txt");
-        String uuserID = UserControllerTest.readTokenFromTxt("uuserID.txt");
-        //封装请求的数据
-        ReqAssetLog reqAssetLog = new ReqAssetLog();
-        reqAssetLog.setToken(token)
-                .setUuserId(Integer.parseInt(uuserID));
-        MvcResult mvcResult = mockMvc.perform(
-                //请求的方法
-                post("/asset/getAssetLog")
-                        //输入的数据类型
-                        .contentType(MediaType.APPLICATION_JSON)
-                        //输入的数据
-                        .content(JsonUtil.objectToJson(reqAssetLog)))
+                        .content(JsonUtil.objectToJson(request)))
                 //获取返回值
                 .andReturn();
         //将返回值转化为对象打印出来
