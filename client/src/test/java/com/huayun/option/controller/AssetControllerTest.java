@@ -52,11 +52,10 @@ class AssetControllerTest {
         String uuserID = UserControllerTest.readTokenFromTxt("uuserID.txt");
         //封装请求的数据
         ReqAssetLog reqAssetLog = new ReqAssetLog();
-        reqAssetLog.setToken(token)
-                .setUuserId(Integer.parseInt(uuserID));
+        reqAssetLog.setToken(token);
         MvcResult mvcResult = mockMvc.perform(
                 //请求的方法
-                post("/asset/getAssetLog")
+                post("/asset/getAssetLog/"+uuserID)
                         //输入的数据类型
                         .contentType(MediaType.APPLICATION_JSON)
                         //输入的数据

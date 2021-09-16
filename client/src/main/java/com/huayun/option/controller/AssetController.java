@@ -42,12 +42,12 @@ public class AssetController {
         }
     }
 
-    @PostMapping("/getAssetLog")
+    @PostMapping("/getAssetLog/{uuserId}")
     @ApiOperation(value = "资金流水查询")
-    public Result getAssetLog(@RequestBody ReqAssetLog reqAssetLog) {
+    public Result getAssetLog(@RequestBody ReqAssetLog reqAssetLog,@PathVariable("uuserId")Integer uuserId) {
         try {
             //将请求参数转化为byte数组
-            byte[] reqBytes = reqAssetLog.getBytes();
+            byte[] reqBytes = reqAssetLog.formatRequest(uuserId);
             //向服务端发送数据并接收服务端消息
             byte[] rspBytes = protoBufService.parseByprotoBuf(reqBytes);
             //将byte数组转化为需要的数据

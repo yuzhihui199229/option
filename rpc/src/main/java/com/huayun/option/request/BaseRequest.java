@@ -3,6 +3,7 @@ package com.huayun.option.request;
 import com.google.protobuf.Message;
 import com.huayun.option.model.MagicNo;
 import com.huayun.option.protobuf.Head;
+import com.huayun.option.protobuf.Protocol;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -30,4 +31,7 @@ public class BaseRequest {
         return byteBuffer.array();
     };
 
+    byte[] formatRequest(int retCode) throws IOException{
+        return null;
+    }
 }

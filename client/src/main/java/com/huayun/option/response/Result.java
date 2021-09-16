@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value="Result",description = "返回的结果")
-public class Result<E> {
+public class Result {
     @ApiModelProperty(value = "返回码")
     private Integer code;
 
@@ -20,7 +20,7 @@ public class Result<E> {
     private String message;
 
     @ApiModelProperty(value = "返回的数据")
-    private E data;
+    private Object data;
 
     public Result(Integer code, String message) {
         this.code = code;

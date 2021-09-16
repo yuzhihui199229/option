@@ -25,7 +25,7 @@ public class ReqExercise extends ReqSelInterface {
      *
      * @return
      */
-    public byte[] formatRequest(int retCode) throws IOException, CopyPropertyException {
+    public byte[] formatRequest(int retCode) throws IOException {
         //消息头封装
         Head head = new Head();
         head.setMsgId(MsgId.MSG_QUERY_POSITION_RIGHT.getId())
