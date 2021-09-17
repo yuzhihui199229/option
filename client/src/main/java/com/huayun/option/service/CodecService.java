@@ -1,0 +1,20 @@
+package com.huayun.option.service;
+
+import com.huayun.option.annotation.RpcProxy;
+import com.huayun.option.codec.ProtocolCodec;
+import com.huayun.option.model.ParseType;
+import io.netty.buffer.ByteBuf;
+
+/**
+ * CODEC解析方式
+ */
+@RpcProxy(parseType = ParseType.CODEC)
+public interface CodecService {
+    /**
+     * CODEC转化
+     * @param byteBuf
+     * @return
+     */
+    ProtocolCodec parseByCodec(ByteBuf byteBuf);
+
+}

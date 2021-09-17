@@ -1,6 +1,5 @@
 package com.huayun.option.request;
 
-import com.huayun.option.exception.CopyPropertyException;
 import com.huayun.option.model.MsgId;
 import com.huayun.option.protobuf.ClientMgr;
 import com.huayun.option.protobuf.Head;
