@@ -34,6 +34,7 @@ public class ServiceRecoveryConfig implements ApplicationListener<ContextRefresh
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         discoverService();
     }
+
     //每一个接口与服务分别建立一次连接
     public void discoverService() {
         for (String service : ChannelPool.service) {
@@ -50,7 +51,7 @@ public class ServiceRecoveryConfig implements ApplicationListener<ContextRefresh
                 ZMQ.Socket socket = ZmqClient.createConnect(zmqIp, zmqPort);
                 String ipPorts = zmqIp + ":" + zmqPort;
                 //保存每个服务对应的socket
-                ChannelPool.addZmqSocket(service,socket);
+                ChannelPool.addZmqSocket(service, socket);
                 //保存每个服务对应的ip和port
                 ChannelPool.addServiceIp(service, ipPorts);
             }

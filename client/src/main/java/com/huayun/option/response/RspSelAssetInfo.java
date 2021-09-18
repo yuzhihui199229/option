@@ -5,8 +5,6 @@ import com.huayun.option.protobuf.ClientMgr;
 import com.huayun.option.protobuf.Protocol;
 import com.huayun.option.utils.ProtoJsonUtil;
 import io.swagger.annotations.ApiModel;
-import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.IOException;
 

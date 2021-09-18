@@ -1,7 +1,6 @@
 package com.huayun.option.controller;
 
 import com.huayun.option.request.ReqCover;
-import com.huayun.option.request.ReqOptionPosition;
 import com.huayun.option.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +14,6 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.nio.charset.Charset;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

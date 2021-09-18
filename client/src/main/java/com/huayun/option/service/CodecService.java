@@ -8,13 +8,13 @@ import io.netty.buffer.ByteBuf;
 /**
  * CODEC解析方式
  */
-@RpcProxy(parseType = ParseType.CODEC)
+@RpcProxy(parseType = ParseType.CODEC,name="codec")
 public interface CodecService {
     /**
      * CODEC转化
-     * @param byteBuf
+     * @param protocolCodec
      * @return
      */
-    ProtocolCodec parseByCodec(ByteBuf byteBuf);
+    ProtocolCodec parseByCodec(ProtocolCodec protocolCodec);
 
 }

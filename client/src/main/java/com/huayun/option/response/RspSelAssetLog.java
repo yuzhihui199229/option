@@ -5,13 +5,10 @@ import com.huayun.option.protobuf.ClientMgr;
 import com.huayun.option.protobuf.Protocol;
 import com.huayun.option.utils.ProtoJsonUtil;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Accessors(chain = true)

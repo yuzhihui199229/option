@@ -1,5 +1,7 @@
 package com.huayun.option.codec;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -57,5 +59,11 @@ public class HeadCodec {
      * 市场代码
      */
     private long mktCode;
+
+    public ByteBuf formatHead() {
+        ByteBuf byteBuf = Unpooled.buffer();
+        byteBuf.writeShortLE(magicNum);
+        return null;
+    }
 
 }

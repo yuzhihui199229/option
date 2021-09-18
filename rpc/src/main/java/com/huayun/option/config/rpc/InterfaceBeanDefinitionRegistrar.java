@@ -78,7 +78,7 @@ public class InterfaceBeanDefinitionRegistrar implements ImportBeanDefinitionReg
         definition.addPropertyValue("type", className);
         String name = annotationAttributes.get("name") == null ? "" : (String) (annotationAttributes.get("name"));
         // 别名
-        String alias = name + "NettyRpcClient";
+        String alias = name + "RpcClient";
         AbstractBeanDefinition beanDefinition = definition.getBeanDefinition();
         beanDefinition.setPrimary(true);
         BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, className,
