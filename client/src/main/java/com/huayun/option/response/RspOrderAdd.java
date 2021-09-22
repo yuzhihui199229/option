@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @ApiModel(value = "RspOrderAdd",description = "订单响应")
-public class RspOrderAdd {
+public class RspOrderAdd extends BaseCodecResponse<RspOrderAdd>{
 
     @ApiModelProperty(value = "整型订单编号")
     private Integer id;
@@ -28,6 +28,6 @@ public class RspOrderAdd {
         clOrdID = (String) byteBuf.readCharSequence(10, CharsetUtil.UTF_8);
         OrdStatus = (String) byteBuf.readCharSequence(1, CharsetUtil.UTF_8);
         version = byteBuf.readIntLE();
-        return null;
+        return this;
     }
 }

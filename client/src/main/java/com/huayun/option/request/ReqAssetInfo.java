@@ -19,6 +19,7 @@ public class ReqAssetInfo extends ReqSelInterface {
      *
      * @return
      */
+    @Override
     public byte[] formatRequest(int retCode) throws IOException {
         //消息头封装
         Head head = new Head();

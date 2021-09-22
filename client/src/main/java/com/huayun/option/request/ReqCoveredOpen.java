@@ -2,7 +2,9 @@ package com.huayun.option.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+@Data
 @ApiModel(value = "ReqCoveredOpen",description = "备兑开仓")
 public class ReqCoveredOpen {
     @ApiModelProperty(value = "令牌",dataType = "char[32]",required = true)

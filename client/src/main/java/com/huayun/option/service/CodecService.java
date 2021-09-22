@@ -16,5 +16,4 @@ public interface CodecService {
      * @return
      */
     ProtocolCodec parseByCodec(ProtocolCodec protocolCodec);
-
 }

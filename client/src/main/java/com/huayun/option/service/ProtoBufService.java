@@ -11,8 +11,8 @@ import com.huayun.option.protobuf.Protocol;
 public interface ProtoBufService {
     /**
      * protobuf转化
-     * @param bytes
-     * @return
+     * @param bytes 请求的字节数
+     * @return byte[] 返回的字节数
      */
     byte[] parseByprotoBuf(byte[] bytes);
 
