@@ -38,8 +38,9 @@ public class TbAssetController {
     })
     public Result selectByCondition(String assetAccount) {
         LambdaQueryWrapper<TbAsset> wrapper=new LambdaQueryWrapper<>();
-        if (StringUtils.hasLength(assetAccount))
-            wrapper.eq(TbAsset::getUaccountId,assetAccount);
+        if (StringUtils.hasLength(assetAccount)) {
+            wrapper.eq(TbAsset::getUaccountId, assetAccount);
+        }
         return new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage(), assetService.list(wrapper));
     }
 }

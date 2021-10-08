@@ -44,6 +44,7 @@ public class ReqLogin {
                 .putInt(totalLen)
                 .putInt(MsgId.MSG_LOGIN.getId())
                 .putInt(0)
+                .putInt(0)
                 .put(bodyByteArray);
         return byteBuffer.array();
     }

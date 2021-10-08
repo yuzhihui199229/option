@@ -7,7 +7,7 @@ public class MagicNo {
     /**
      * protobuf请求头的长度
      */
-    public static final int headLen = 12;
+    public static final int headLen = 16;
 
     /**
      * codec请求头的长度

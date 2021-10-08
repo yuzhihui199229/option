@@ -32,6 +32,7 @@ public class ReqUserInfo {
                 .putInt(totalLen)
                 .putInt(MsgId.MSG_QUERY_USER_INFO.getId())
                 .putInt(0)
+                .putInt(0)
                 .put(bodyByteArray);
         return byteBuffer.array();
     }

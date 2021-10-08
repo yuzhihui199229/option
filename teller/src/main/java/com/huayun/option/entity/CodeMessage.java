@@ -1,9 +1,18 @@
 package com.huayun.option.entity;
 
 public enum CodeMessage {
-    SUCCESS(0,"成功"),
-    ERROR(20001,"失败"),
-    TOKEN_ERROR(20002,"token校验不正确");
+    /**
+     * 成功
+     */
+    SUCCESS(0, "成功"),
+    /**
+     * 失败
+     */
+    ERROR(20001, "失败"),
+    /**
+     * token校验不正确
+     */
+    TOKEN_ERROR(20002, "token校验不正确");
 
     CodeMessage(Integer code, String message) {
         this.code = code;

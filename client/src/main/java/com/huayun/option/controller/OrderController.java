@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "订单管理")
 @RequestMapping("/order")
 public class OrderController {
-    @Autowired
+//    @Autowired
     private CodecService codecService;
 
     @PostMapping("/orderAdd/{uuserId}/{sessionID}")

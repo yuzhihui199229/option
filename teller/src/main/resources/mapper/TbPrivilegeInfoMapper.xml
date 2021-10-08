@@ -2,4 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huayun.option.mapper.TbPrivilegeInfoMapper">
 
+    <select id="getPrivilege" resultType="com.huayun.option.entity.TbPrivilegeInfo">
+        select id,menu_id,menu_level,menu_name,menu_path,pre_menu_id,sort from tb_privilege_info
+        where
+        <if test="preMenuId==null or preMenuId==''">
+            pre_menu_id='0'
+        </if>
+        <if test="preMenuId!=null and preMenuId!=''">
+            pre_menu_id=#{preMenuId}
+        </if>
+        and id in (select id from tb_role_privilege where rid in
+        (
+        select id from tb_role_info where role_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.roleId}
+        </foreach>
+        ))
+    </select>
+
 </mapper>

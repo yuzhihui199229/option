@@ -3,10 +3,8 @@ package com.huayun.option.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.huayun.option.entity.CodeMessage;
-import com.huayun.option.entity.Result;
-import com.huayun.option.entity.TbRoleInfo;
-import com.huayun.option.entity.TbTellInfo;
+import com.huayun.option.entity.*;
+import com.huayun.option.service.TbPrivilegeInfoService;
 import com.huayun.option.service.TbRoleInfoService;
 import com.huayun.option.service.TbTellInfoService;
 import com.huayun.option.utils.JwtUtil;
@@ -16,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,13 +43,16 @@ public class TbTellInfoController {
     @Autowired
     private TbRoleInfoService roleInfoService;
 
+    @Autowired
+    private TbPrivilegeInfoService privilegeInfoService;
+
     @GetMapping("/login")
     @ApiOperation("登录")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userName", value = "用户名",required = true),
-            @ApiImplicitParam(name = "password", value = "密码",required = true)
+            @ApiImplicitParam(name = "userName", value = "用户名", required = true),
+            @ApiImplicitParam(name = "password", value = "密码", required = true)
     })
-    public Result login(String userName,String password) {
+    public Result login(String userName, String password) {
         //包装login的查询条件
         LambdaQueryWrapper<TbTellInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(TbTellInfo::getUserName, userName)
@@ -58,20 +60,16 @@ public class TbTellInfoController {
         //查询该用户是否存在
         TbTellInfo tellInfoRsp = tellInfoService.getOne(wrapper);
         if (tellInfoRsp != null) {
-//            //查询用户的角色
-//            List<TbRoleInfo> roleList = roleInfoService.getRoleList(tellInfoRsp);
-//            //生成角色的字符串组
-//            StringBuilder sb = new StringBuilder();
-//            for (TbRoleInfo tbRoleInfo : roleList) {
-//                sb.append(tbRoleInfo.getRoleId());
-//            }
-//            String roleStr = sb.toString();
+            //查询用户的所有权限
+            List<TbRoleInfo> roleList = roleInfoService.getRoleList(tellInfoRsp);
+            List<TbPrivilegeInfo> privilegeInfos = privilegeInfoService.getPrivilege(roleList, null);
             //生成token
             String token = JwtUtil.sign(tellInfoRsp.getUserName());
             //创建保存信息的map
-            Map<String, Object> map = new HashMap<>();
-            map.put("token",token);
-            return new Result(0, "登录成功",map);
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("token", token);
+            map.put("menus", privilegeInfos);
+            return new Result(0, "登录成功", map);
         }
         return new Result(1, "登录失败");
     }
@@ -79,6 +77,6 @@ public class TbTellInfoController {
     @GetMapping("/selectList")
     public Result selectList() {
         List<TbTellInfo> list = tellInfoService.list();
-        return new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage(),list);
+        return new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage(), list);
     }
 }

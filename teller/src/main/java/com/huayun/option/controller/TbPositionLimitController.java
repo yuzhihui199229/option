@@ -42,10 +42,12 @@ public class TbPositionLimitController {
     })
     public Result selectByCondition(Integer usecurityId, Integer uaccountId) {
         LambdaQueryWrapper<TbPositionLimit> wrapper = new LambdaQueryWrapper<>();
-        if (usecurityId != null)
+        if (usecurityId != null) {
             wrapper.eq(TbPositionLimit::getUsecurityId, usecurityId);
-        if (uaccountId != null)
+        }
+        if (uaccountId != null) {
             wrapper.eq(TbPositionLimit::getUaccountId, uaccountId);
+        }
         return new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage(), positionLimitService.list(wrapper));
     }
 }

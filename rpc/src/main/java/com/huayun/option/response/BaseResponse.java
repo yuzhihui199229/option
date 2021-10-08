@@ -5,6 +5,7 @@ import com.huayun.option.model.MagicNo;
 import com.huayun.option.protobuf.Head;
 import com.huayun.option.protobuf.Protocol;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -24,13 +25,14 @@ public class BaseResponse {
         //复制headLen之后的字节到body数组
         int bodyLen = rspBytes.length - MagicNo.headLen;
         byte[] body = new byte[bodyLen];
-        if (rspBytes.length > MagicNo.headLen)
-            System.arraycopy(rspBytes, MagicNo.headLen,body,0,bodyLen);
+        if (rspBytes.length > MagicNo.headLen) {
+            System.arraycopy(rspBytes, MagicNo.headLen, body, 0, bodyLen);
+        }
         Protocol protocol = new Protocol();
         protocol.setHead(head)
                 .setBody(body);
         return protocol;
-    };
+    }
 
     /**
      * 解析返回的消息头
@@ -43,11 +45,13 @@ public class BaseResponse {
         int totalLen = buffer.getInt(0);
         int msgId = buffer.getInt(4);
         int retCode = buffer.getInt(8);
+        int count = buffer.getInt(12);
         Head head = new Head();
         //消息头封装
         head.setTotalLen(totalLen)
                 .setMsgId(msgId)
-                .setRetCode(retCode);
+                .setRetCode(retCode)
+                .setCount(count);
         return head;
     }
 

@@ -20,4 +20,9 @@ public class Head {
      * 返回码
      */
     int retCode;
+
+    /**
+     * 分页使用
+     */
+    int count;
 }
