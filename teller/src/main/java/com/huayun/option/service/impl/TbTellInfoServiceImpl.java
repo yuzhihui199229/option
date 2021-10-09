@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.util.DigestUtils;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,19 +40,23 @@ public class TbTellInfoServiceImpl extends ServiceImpl<TbTellInfoMapper, TbTellI
     @Override
     @Transactional
     public boolean addUser(Map<String, Object> map) {
+        //插入tb_tell_info
         TbTellInfo tellInfo = new TbTellInfo();
         Object userName = map.get("userName");
         Optional.of(userName).ifPresent(e -> tellInfo.setUserName((String) e));
-        Optional.of(map.get("password")).ifPresent(e -> tellInfo.setPassword((String) e));
+        Optional.of(map.get("password")).ifPresent(e -> tellInfo.setPassword(DigestUtils.md5DigestAsHex(((String) e).getBytes())));
+        tellInfo.setUserStatus(0);
+        tellInfo.setCreateTime((long) LocalTime.now().toSecondOfDay());
+        tellInfo.setUpdateTime((long) LocalTime.now().toSecondOfDay());
         int add = tellInfoMapper.insert(tellInfo);
-        QueryWrapper<TbTellInfo> wrapper = new QueryWrapper<>();
         if (add > 0) {
+            //批量插入tb_tell_role
+            QueryWrapper<TbTellInfo> wrapper = new QueryWrapper<>();
             wrapper.select("id").eq("user_name", userName);
             TbTellInfo tellInfoAdd = tellInfoMapper.selectOne(wrapper);
-            TbTellRole tellRole = new TbTellRole();
-            Optional.ofNullable(map.get("roleId")).ifPresent(e -> tellRole.setRid((int) e));
-            tellRole.setTid(tellInfoAdd.getId());
-            return tellRoleMapper.insert(tellRole) > 0;
+            List<Integer> rids = (List<Integer>) map.get("rid");
+            int insertBatchCount = tellRoleMapper.insertBatch(rids, tellInfoAdd.getId());
+            return insertBatchCount==rids.size();
         }
         return false;
     }

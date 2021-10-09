@@ -76,7 +76,7 @@ public class TbTellInfoController {
 
     @PostMapping("/addUser")
     @ApiOperation("新增管理员用户")
-    public Result addUser(@RequestBody Map<String,Object> map) {
-        return null;
+    public Result addUser(@RequestBody Map<String, Object> map) {
+        return tellInfoService.addUser(map) ? new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage()) : new Result(CodeMessage.ERROR.getCode(), CodeMessage.ERROR.getMessage());
     }
 }

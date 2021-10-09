@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.huayun.option.mapper.TbTellRoleMapper">
 
+    <insert id="insertBatch">
+        insert into tb_tell_role (tid,rid) values
+        <foreach collection="list" item="item" separator=",">
+            (#{tid},#{item})
+        </foreach>
+    </insert>
 </mapper>
