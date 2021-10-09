@@ -22,7 +22,7 @@ public class TbAsset implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "事务ID")
-    private Long txId;
+    private Long id;
 
     @ApiModelProperty(value = "期权ID")
     private Integer uoptionId;

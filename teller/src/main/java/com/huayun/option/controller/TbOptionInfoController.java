@@ -1,6 +1,7 @@
 package com.huayun.option.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.huayun.option.entity.CodeMessage;
 import com.huayun.option.entity.Result;
 import com.huayun.option.entity.TbOptionInfo;
@@ -9,13 +10,12 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
-
+import javax.management.Query;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * <p>
@@ -35,8 +35,12 @@ public class TbOptionInfoController {
     private TbOptionInfoService optionInfoService;
 
     @GetMapping("/selectList")
-    public Result selectList() {
-        List<TbOptionInfo> optionInfos = optionInfoService.list();
-        return new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage(),optionInfos);
+    public Result selectList(@RequestBody Map<String, Object> map) {
+        QueryWrapper<TbOptionInfo> wrapper = new QueryWrapper<>();
+        Optional.ofNullable(map.get("contractName")).ifPresent(e -> wrapper.like("contract_name", e));
+        Optional.ofNullable(map.get("contractCode")).ifPresent(e -> wrapper.eq("contract_code", e));
+        Optional.ofNullable(map.get("contractAccountCode")).ifPresent(e -> wrapper.eq("contract_account_code", e));
+        Optional.ofNullable(map.get("optionId")).ifPresent(e -> wrapper.eq("option_id", e));
+        return new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage(), optionInfoService.list(wrapper));
     }
 }

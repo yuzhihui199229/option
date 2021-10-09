@@ -2,7 +2,6 @@ package com.huayun.option.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.huayun.option.entity.*;
 import com.huayun.option.service.TbPrivilegeInfoService;
 import com.huayun.option.service.TbRoleInfoService;
@@ -12,18 +11,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * <p>
@@ -78,5 +72,11 @@ public class TbTellInfoController {
     public Result selectList() {
         List<TbTellInfo> list = tellInfoService.list();
         return new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage(), list);
+    }
+
+    @PostMapping("/addUser")
+    @ApiOperation("新增管理员用户")
+    public Result addUser(@RequestBody Map<String,Object> map) {
+        return null;
     }
 }

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.beans.BeanUtils;
 
 /**
  * <p>
@@ -131,6 +132,4 @@ public class TbOptionInfo implements Serializable {
 
     @ApiModelProperty(value = "用户日买入上限")
     private Integer cumBuyUpper;
-
-
 }
