@@ -59,4 +59,9 @@ public class TbRoleInfoServiceImpl extends ServiceImpl<TbRoleInfoMapper, TbRoleI
         }
         return false;
     }
+
+    @Override
+    public List<TbRoleInfo> queryByCondition(String userName) {
+        return roleInfoMapper.queryByCondition(userName);
+    }
 }

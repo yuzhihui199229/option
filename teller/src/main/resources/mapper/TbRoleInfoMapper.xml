@@ -16,4 +16,10 @@
         AND a.id = c.rid
         AND b.id =#{id}
     </select>
+
+    <select id="queryByCondition" resultType="com.huayun.option.entity.TbRoleInfo">
+        select a.role_id,a.role_name from tb_role_info a where a.id in (
+        select b.rid from tb_tell_role b where b.tid=(
+        select c.id from tb_tell_info c where c.user_name=#{userName}))
+    </select>
 </mapper>

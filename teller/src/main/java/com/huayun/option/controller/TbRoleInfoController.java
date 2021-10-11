@@ -6,11 +6,7 @@ import com.huayun.option.entity.Result;
 import com.huayun.option.service.TbRoleInfoService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -33,5 +29,10 @@ public class TbRoleInfoController {
     @PostMapping("/addRole")
     public Result addRole(@RequestBody Map<String, Object> map) {
         return roleInfoService.addRole(map) ? new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage()) : new Result(CodeMessage.ERROR.getCode(), CodeMessage.ERROR.getMessage());
+    }
+
+    @GetMapping("/queryByCondition/{userName}")
+    public Result queryByCondition(@PathVariable("userName") String userName) {
+        return new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage(), roleInfoService.queryByCondition(userName));
     }
 }

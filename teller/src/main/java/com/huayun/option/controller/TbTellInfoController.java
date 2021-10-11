@@ -79,4 +79,10 @@ public class TbTellInfoController {
     public Result addUser(@RequestBody Map<String, Object> map) {
         return tellInfoService.addUser(map) ? new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage()) : new Result(CodeMessage.ERROR.getCode(), CodeMessage.ERROR.getMessage());
     }
+
+    @PostMapping("/updateUserRole/{userName}")
+    @ApiOperation("修改用户角色")
+    public Result updateUserRole(@PathVariable("userName") String userName, @RequestBody Map<String, Object> map) {
+        return tellInfoService.updateUserRole(userName, map) ? new Result(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage()) : new Result(CodeMessage.ERROR.getCode(), CodeMessage.ERROR.getMessage());
+    }
 }

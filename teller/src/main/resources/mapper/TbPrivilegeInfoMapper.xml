@@ -20,4 +20,8 @@
         ))
     </select>
 
+    <select id="queryByCondition" resultType="com.huayun.option.entity.TbPrivilegeInfo">
+        select id,menu_id,menu_level,menu_name,menu_path,pre_menu_id,sort from tb_privilege_info
+        where id in (select pid from tb_role_privilege where rid=#{id})
+    </select>
 </mapper>

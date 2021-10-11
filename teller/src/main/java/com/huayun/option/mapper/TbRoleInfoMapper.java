@@ -22,4 +22,11 @@ public interface TbRoleInfoMapper extends BaseMapper<TbRoleInfo> {
      * @return
      */
     List<TbRoleInfo> getRoleList(TbTellInfo tellInfo);
+
+    /**
+     * 根据用户名查询用户的角色
+     * @param userName
+     * @return
+     */
+    List<TbRoleInfo> queryByCondition(String userName);
 }

@@ -24,4 +24,13 @@ public interface TbPrivilegeInfoService extends IService<TbPrivilegeInfo> {
      * @return List<TbPrivilegeInfo> 返回权限列表
      */
     List<TbPrivilegeInfo> getPrivilege(List<TbRoleInfo> roleInfos, String preMenuId);
+
+
+    /**
+     * 根据角色id查询用户的权限
+     *
+     * @param id 角色id
+     * @return
+     */
+    List<TbPrivilegeInfo> queryByCondition(Integer id);
 }

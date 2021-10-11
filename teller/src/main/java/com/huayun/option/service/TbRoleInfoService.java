@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author yuzh
@@ -19,6 +19,7 @@ import java.util.Map;
 public interface TbRoleInfoService extends IService<TbRoleInfo> {
     /**
      * 获取角色信息列表
+     *
      * @param tbTellInfo 角色信息
      * @return List<TbRoleInfo> 返回角色信息列表
      */
@@ -26,8 +27,17 @@ public interface TbRoleInfoService extends IService<TbRoleInfo> {
 
     /**
      * 添加角色
+     *
      * @param map 角色的输入参数，roleId，roleName,menuId
      * @return 是否添加角色成功
      */
     boolean addRole(Map<String, Object> map);
+
+    /**
+     * 根据用户名查询用户的角色信息
+     *
+     * @param userName 用户名
+     * @return 角色列表
+     */
+    List<TbRoleInfo> queryByCondition(String userName);
 }

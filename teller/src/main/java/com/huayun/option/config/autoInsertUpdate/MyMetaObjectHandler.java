@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
@@ -23,8 +24,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setFieldValByName("create_time", LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8")), metaObject);
-        this.setFieldValByName("update_time", LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8")), metaObject);
+        this.setFieldValByName("create_time", Instant.now().getEpochSecond(), metaObject);
+        this.setFieldValByName("update_time", Instant.now().getEpochSecond(), metaObject);
     }
 
     /**
@@ -34,6 +35,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("update_time", LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8")), metaObject);
+        this.setFieldValByName("update_time", Instant.now().getEpochSecond(), metaObject);
     }
 }

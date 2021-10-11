@@ -37,4 +37,9 @@ public class TbPrivilegeInfoServiceImpl extends ServiceImpl<TbPrivilegeInfoMappe
         }
         return privilegeInfos;
     }
+
+    @Override
+    public List<TbPrivilegeInfo> queryByCondition(Integer id) {
+        return privilegeInfoMapper.queryByCondition(id);
+    }
 }

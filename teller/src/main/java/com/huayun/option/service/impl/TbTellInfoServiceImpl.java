@@ -3,6 +3,7 @@ package com.huayun.option.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.huayun.option.TellerApplication;
 import com.huayun.option.entity.TbPrivilegeInfo;
+import com.huayun.option.entity.TbRolePrivilege;
 import com.huayun.option.entity.TbTellInfo;
 import com.huayun.option.entity.TbTellRole;
 import com.huayun.option.mapper.TbTellInfoMapper;
@@ -46,8 +47,6 @@ public class TbTellInfoServiceImpl extends ServiceImpl<TbTellInfoMapper, TbTellI
         Optional.of(userName).ifPresent(e -> tellInfo.setUserName((String) e));
         Optional.of(map.get("password")).ifPresent(e -> tellInfo.setPassword(DigestUtils.md5DigestAsHex(((String) e).getBytes())));
         tellInfo.setUserStatus(0);
-        tellInfo.setCreateTime((long) LocalTime.now().toSecondOfDay());
-        tellInfo.setUpdateTime((long) LocalTime.now().toSecondOfDay());
         int add = tellInfoMapper.insert(tellInfo);
         if (add > 0) {
             //批量插入tb_tell_role
@@ -56,8 +55,25 @@ public class TbTellInfoServiceImpl extends ServiceImpl<TbTellInfoMapper, TbTellI
             TbTellInfo tellInfoAdd = tellInfoMapper.selectOne(wrapper);
             List<Integer> rids = (List<Integer>) map.get("rid");
             int insertBatchCount = tellRoleMapper.insertBatch(rids, tellInfoAdd.getId());
-            return insertBatchCount==rids.size();
+            return insertBatchCount == rids.size();
         }
         return false;
+    }
+
+    @Override
+    @Transactional
+    public boolean updateUserRole(String userName, Map<String, Object> map) {
+        //用户名对应的id
+        QueryWrapper<TbTellInfo> tellInfoQueryWrapper = new QueryWrapper<>();
+        tellInfoQueryWrapper.select("id").eq("user_name", userName);
+        TbTellInfo tellInfo = tellInfoMapper.selectOne(tellInfoQueryWrapper);
+        //删除该用户的所有角色
+        QueryWrapper<TbTellRole> tellRoleWrapper = new QueryWrapper<>();
+        tellRoleWrapper.eq("tid", tellInfo.getId());
+        tellRoleMapper.delete(tellRoleWrapper);
+        //添加该用户的新角色
+        List<Integer> rids = (List<Integer>) map.get("rids");
+        int insertBatch = tellRoleMapper.insertBatch(rids, tellInfo.getId());
+        return rids.size() == insertBatch;
     }
 }
