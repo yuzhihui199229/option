@@ -55,7 +55,7 @@ public class TbRoleInfoServiceImpl extends ServiceImpl<TbRoleInfoMapper, TbRoleI
             TbRoleInfo roleInfoAdd = roleInfoMapper.selectOne(wrapper);
             List<Integer> pids = (List<Integer>) map.get("pid");
             int rolePrivilegeCount = rolePrivilegeMapper.insertBatch(pids, roleInfoAdd.getId());
-            return rolePrivilegeCount==pids.size();
+            return rolePrivilegeCount == pids.size();
         }
         return false;
     }
@@ -63,5 +63,17 @@ public class TbRoleInfoServiceImpl extends ServiceImpl<TbRoleInfoMapper, TbRoleI
     @Override
     public List<TbRoleInfo> queryByCondition(String userName) {
         return roleInfoMapper.queryByCondition(userName);
+    }
+
+    @Override
+    @Transactional
+    public boolean updateRolePrivilege(int rid, List<Integer> pids) {
+        //删除该角色原有的权限
+        QueryWrapper<TbRolePrivilege> wrapper=new QueryWrapper<>();
+        wrapper.eq("rid",rid);
+        rolePrivilegeMapper.delete(wrapper);
+        //添加新的权限
+        int rolePrivilegeCount = rolePrivilegeMapper.insertBatch(pids, rid);
+        return pids.size() == rolePrivilegeCount;
     }
 }

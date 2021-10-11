@@ -40,4 +40,12 @@ public interface TbRoleInfoService extends IService<TbRoleInfo> {
      * @return 角色列表
      */
     List<TbRoleInfo> queryByCondition(String userName);
+
+    /**
+     * 根据角色id修改权限
+     * @param rid
+     * @param pids
+     * @return
+     */
+    boolean updateRolePrivilege(int rid,List<Integer> pids);
 }
