@@ -1,20 +1,17 @@
 package com.huayun.option.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.huayun.option.entity.TbRoleInfo;
 import com.huayun.option.entity.TbRolePrivilege;
 import com.huayun.option.entity.TbTellInfo;
-import com.huayun.option.entity.TbUserInfo;
 import com.huayun.option.mapper.TbRoleInfoMapper;
 import com.huayun.option.mapper.TbRolePrivilegeMapper;
 import com.huayun.option.service.TbRoleInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
